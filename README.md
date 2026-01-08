@@ -25,7 +25,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+As climbing moves to the forefront of sports, the demand for climbing gyms has increased dramatically. With more and more climbers moving indoors the systems of yesterday to track and manage guest and members are no longer adequet. BelayOn solves these problems by using modern web tools and techniques to help you manage your gym more effectively, allowing your climbers a seamless transition from guest to member. Improved productivity for your staff also allows them to focus more on customer relations, facilities managment, safety, and instruction overall improving the quality of life for everyone in the gym. 
 
 ### Design
 

@@ -42,9 +42,9 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- One-Click Member: Allow easy transition from Guest to Member in few clicks.
+- Robust Notes: Ability to add notes to account and view deleted notes to keep staff aware of context with accounts.
+- Linked Accounts: Families are easily accessed and modified together, rather than needing to edit each account separately.
 
 ### Technologies
 

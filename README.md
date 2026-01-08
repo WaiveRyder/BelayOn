@@ -51,12 +51,12 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Provide a structure to the website ensuring staff can find what they need.
+- **CSS** - By creating a smooth workflow through efficient and pleasing to look at site.
+- **React** - React will make the webpage interactable for staff members to make edits to accounts.
+- **Service** - Allow staff to access accounts from anywhere in the gym, or across multiple gym locations.
+- **DB/Login** - Ensure only staff can make edits to the system and store guest and member details.
+- **WebSocket** - Prevent Staff from editing the same account and overriding eachother's work.
 
 ## 🚀 AWS deliverable
 

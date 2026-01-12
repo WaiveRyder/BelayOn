@@ -36,9 +36,15 @@ First page will be a login page, allowing employees access to the system. Loggin
 ```mermaid
 sequenceDiagram
     actor You
+    actor OtherUser
     actor Website
-    You->>Website: Replace this with your design
+    You->>Website: Requests
+    Server -->>Website: Requests
+    Website->>Server: Requests
+    OtherUser->>Website: Requests
+    
 ```
+
 
 ### Key features
 

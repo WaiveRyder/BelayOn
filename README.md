@@ -4,24 +4,15 @@
 
 An application to keep track of your gym's members to keep climbers climbing and staff moving.
 
-> [!NOTE]
-> This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
-
-> [!NOTE]
-> If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
-
 ## 🚀 Specification Deliverable
-
-> [!NOTE]
-> Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -29,16 +20,22 @@ As climbing moves to the forefront of sports, the demand for climbing gyms has i
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](BelayOnDraft.jpeg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+First page will be a login page, allowing employees access to the system. Logging in will pull up the list of all guests and members with some information about each. Clicking on a name will pull up a small window with more detailed information and the ability to view their membership status and notes. All of these will have buttons and options to edit on the fly.
 
 ```mermaid
 sequenceDiagram
     actor You
+    actor OtherUser
     actor Website
-    You->>Website: Replace this with your design
+    You->>Website: Requests
+    Server -->>Website: Requests
+    Website->>Server: Requests
+    OtherUser->>Website: Requests
+    
 ```
+
 
 ### Key features
 
@@ -51,18 +48,18 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Provide a structure to the website ensuring staff can find what they need.
-- **CSS** - By creating a smooth workflow through efficient and pleasing to look at site.
-- **React** - React will make the webpage interactable for staff members to make edits to accounts.
-- **Service** - Allow staff to access accounts from anywhere in the gym, or across multiple gym locations.
-- **DB/Login** - Ensure only staff can make edits to the system and store guest and member details.
-- **WebSocket** - Prevent Staff from editing the same account and overriding eachother's work.
+- **HTML** - Provide a structure to the website ensuring users can find what they need. Two pages, one for logging in and one for displaying the guests and members. A smaller popup window will be needed to display more info of the guests.
+- **CSS** - By creating a smooth workflow through efficient and pleasing to look at site. Scaling on different screen sizes, using smoother edges and bright colors will allow for a modern sleek design.
+- **React** - React will make the webpage interactable for users to login, make edits to accounts, show other users working on accounts, and showing the list of guests/members.
+- **Service** - Allow users to access accounts from anywhere. Retrieves member's and guest's data, edits from the user to be saved, current editing from other users, logging in and signing up, and retreiving motivation quotes from [ZenQuotes](https://zenquotes.io?api=today)
+- **DB/Login** - Ensure only certified users can make edits to the system and store guest and member accounts/details.
+- **WebSocket** - Prevent users from editing the same account and overriding eachother's work. Shows which accounts are locked because other users are currently editing them.
 
 ## 🚀 AWS deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://onbelay.click).
 
 ## 🚀 HTML deliverable
 

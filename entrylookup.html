@@ -21,7 +21,34 @@
         </header>
     
         <main>
-            <p>This is a placeholder paragraph to show the main tag</p>
+            <h1>Account Viwer</h1>
+
+            <h2>Now Viewing Peter Quill</h2>
+
+            <form method="get" action="database.html">
+                <div>
+                    <input type="text" required value="Peter" placeholder="First Name">
+                    <input type="text" required value="Quill" placeholder="Last Name">
+                </div>
+
+                <div>
+                    <input type="date" required value="1980-10-30">
+                </div>
+                
+                <div>
+                    <input type="email" required value="starlord@hotmail.com" placeholder="email@domain.com">
+                </div>
+
+                <div>
+                    <select name="type" id="Member Type" value="Guest">
+                        <option value="Guest">Guest</option>
+                        <option value="Member">Member</option>
+                    </select>
+                </div>
+
+                <Button>Save Changes and Check In</Button>
+                <Button>Quit and Check In</Button>
+            </form>
         </main>
 
         <footer>

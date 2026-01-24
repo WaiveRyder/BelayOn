@@ -65,15 +65,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - 5 pages: index.html (login), database.html (for searching up accounts), entrylookup.html (for viewing/editing an account), createaccount.html (for new accounts), and about.html (short description of the software).
+- [x] **Proper HTML element usage** - I used several elements including nav, header, footer, form, paragraphs, table, buttons, and inputs.
+- [x] **Links** - Each page can be accessed from the others through the links at the top of the page.
+- [x] **Text** - Each page includes the name of the page and simple instructions as well as the about page has tons.
+- [x] **3rd party API placeholder** - On the about page there is a spot for motivational quotes that I intend to source from a website.
+- [x] **Images** - I including a motivational image of Adam Ondra climbing the route Silence on the about page.
+- [x] **Login placeholder** - index.html includes the login process.
+- [x] **DB data placeholder** - On the database page there is a placeholder table which will be loaded with the guests details.
+- [x] **WebSocket placeholder** - Included next to guest/members names is the placeholder for the names of staff members working on accounts.
 
 ## 🚀 CSS deliverable
 

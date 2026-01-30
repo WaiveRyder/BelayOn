@@ -27,18 +27,20 @@
     
         <main>
             <h1>Welcome to BelayOn!</h1>
-            <h2>Please Login or Create an account below.</h2>
+            <h2>Please login or sign up below.</h2>
             <form method="get" id='login' action="database.html">
                 <div>
-                    @
-                    <input type="email" placeholder="email@domain.com">
+                    @ Email Address
+                    <input type="email" class="form-control" required placeholder="enter email">
                 </div>
                 <div>
-                    🔒
-                    <input type="password" placeholder="enter password">
+                    🔒Password
+                    <input type="enter password" class="form-control" required placeholder="password">
                 </div>
-                <button>Login</button>
-                <Button>Create New Account</Button>
+                <div class="login-form">
+                    <button class="btn btn-outline-primary me-2">Login</button>
+                    <Button class="btn btn-primary">Sign Up</Button>
+                </div>
             </form>
         </main>
 

@@ -37,6 +37,12 @@ menu {
     padding: 0 1em;
 }
 
+.login-form {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
 #page-title {
     padding-left: 12px;
 }

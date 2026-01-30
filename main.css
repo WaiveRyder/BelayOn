@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 header {
     background-color: rgb(152, 211, 137);
 }
@@ -8,4 +12,24 @@ main {
 
 footer {
     background-color: rgb(62, 54, 63);
+}
+
+menu {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0px;
+    list-style: none;
+}
+
+.navbar-item {
+    padding: 0 1em;
+    
+}
+
+.navbar-link {
+    text-decoration: none;
+}
+
+#page-title {
+    padding-left: 12px;
 }

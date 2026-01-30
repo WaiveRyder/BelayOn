@@ -7,20 +7,21 @@ body {
 
 header {
     background-color: rgb(62, 54, 63);
-    flex: 0.2 100px 115px;
+    flex: 12%;
 }
 
 main {
     background-color: rgb(152, 211, 137);
-    flex: 0.7 100%;
+    flex: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 footer {
     background-color: rgb(62, 54, 63);
-    flex: 0.1 100px 100px;
+    flex: 6%;
     display: flex;
     flex-direction: row;
 }
@@ -47,4 +48,8 @@ menu {
 
 #github-link {
     float: right;
+}
+
+* {
+    color: white;
 }

@@ -1,21 +1,25 @@
 body {
     display: flex;
     flex-direction: column;
+    margin: 0;
+    height: 100vh;
 }
 
 header {
-    background-color: rgb(152, 211, 137);
-    flex: 0 100px 100px;
+    background-color: rgb(62, 54, 63);
+    flex: 0.2 100px 115px;
 }
 
 main {
-    background-color: rgb(126, 137, 135);
-    flex: 0 0;
+    background-color: rgb(152, 211, 137);
+    flex: 0.7 100%;
 }
 
 footer {
     background-color: rgb(62, 54, 63);
-    flex: 0 100px 100px;
+    flex: 0.1 100px 100px;
+    display: flex;
+    flex-direction: row;
 }
 
 menu {

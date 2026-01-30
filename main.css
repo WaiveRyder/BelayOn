@@ -8,6 +8,7 @@ body {
 header {
     background-color: rgb(62, 54, 63);
     flex: 12%;
+    color: white;
 }
 
 main {
@@ -57,6 +58,5 @@ menu {
 }
 
 * {
-    color: white;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

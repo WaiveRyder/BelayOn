@@ -16,6 +16,24 @@
     width: 70%;
 }
 
+#top-left {
+    border-top-left-radius: 1em;
+}
+
+#bottom-left {
+    border-bottom-left-radius: 1em;
+    border-bottom-width: 0em;
+}
+
+#top-right {
+    border-top-right-radius: 1em;
+}
+
+#bottom-right {
+    border-bottom-right-radius: 1em;
+    border-bottom-width: 0em;
+}
+
 td {
     padding-right: 0em !important;
     padding-left: 0em !important;

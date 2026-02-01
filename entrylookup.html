@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="entrylookup.css">
         <title>BelayOn</title>
         <link rel="icon" href="favicon.ico" />
         <link rel="stylesheet" href="main.css" />
@@ -19,7 +20,7 @@
                     <li><a class="navbar-link" href="index.html">Login</a></li>
                     <li><a class="navbar-link" href="database.html">Database</a></li>
                     <li><a class="navbar-link" href="createaccount.html">Create New Account</a></li>
-                    <li><a class="navbar-link" href="entrylookup.html">View Account</a></li>
+                    <li><a class="navbar-link-main" href="entrylookup.html">View Account</a></li>
                     <li><a class="navbar-link" href="about.html">About</a></li>
                 </menu>
             </nav>
@@ -30,53 +31,87 @@
 
             <h2>Now Viewing Peter Quill</h2>
 
-            <form method="get" action="database.html">
-                <div>
-                    First & Last Name
-                    <input type="text" required value="Peter" placeholder="First Name">
-                    <input type="text" required value="Quill" placeholder="Last Name">
+            <form id="grid-form" method="get" action="database.html">
+                <div class="row">
+                    <div class="col">
+                        <label for="inputName">First Name</label>
+                        <input type="text" class="form-control" id="inputName" value="Peter" placeholder="First Name" required>
+                    </div>
+                    <div class="col">
+                        <label for="inputMiddleName">Middle Name</label>
+                        <input type="text" class="form-control" id="inputMiddleName" value="" placeholder="Middle Name">
+                    </div>
+                    <div class="col">
+                        <label for="inputLastName">Last Name</label>
+                        <input type="text" class="form-control" id="inputLastName" value="Quill" placeholder="Last Name" required>
+                    </div>
                 </div>
 
-                <div>
-                    Birthday
-                    <input type="date" required value="1980-10-30">
-                </div>
-                
-                <div>
-                    Email
-                    <input type="email" required value="starlord@hotmail.com" placeholder="email@domain.com">
+                <div class="row">
+                    <div class="col">
+                        <label for="inputDOB">Date of Birth</label>
+                        <input type="date" class="form-control" id="inputDOB" value="1980-10-30" required>
+                    </div>
                 </div>
 
-                <div>
-                    Type
-                    <select name="type" id="Member Type" value="Guest">
-                        <option value="Guest">Guest</option>
-                        <option value="Member">Member</option>
-                    </select>
+                <div class="row">
+                    <div class="col">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" value="starlord@hotmail.com" placeholder="Email" required>
+                    </div>
                 </div>
 
-                <div>
-                    Last Visit
-                    <input type="date" readonly value="2026-01-17">
+                <div class="row">
+                    <div class="col">
+                        <label for="memberType">Type</label>
+                        <select name="type" id="memberType" class="form-control" value="Guest">
+                            <option value="Guest">Guest</option>
+                            <option value="Member">Member</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div>
-                    <p>Notes:</p>
-                    <hr />
-                        <p>Listens to music while climbing</p>
-                    <hr />
-
-                    <form method="get">
-                        <input type="text" placeholder="New Note">
-                        <button>Add New Note</button>
-                    </form>
-
-                    <hr />
+                <div class="row">
+                    <div class="col">
+                        <label for="lastVisit">Last Visit</label>
+                        <input class="form-control" type="date" readonly value="2026-01-17">
+                    </div>
                 </div>
 
-                <Button>Save Changes and Check In</Button>
-                <Button>Quit and Check In</Button>
-            </form>
+                <div class="row">
+                    <div class="col">
+                        Notes:
+                        <div class="notes-list">
+                            <textarea class="form-control" name="note" id="note1" readonly>"Likes to listen to music while climbing. -Sarah 08/24/2025 "</textarea>
+                            <textarea class="form-control" name="note" id="note2" readonly>"Needs belay certification. -John 01/16/25 "</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="new-note-form">Create New Note:</label>
+                        <textarea class="form-control" name="note" id="new-note-form" placeholder="Type new note..."></textarea>
+                    </div>
+                    <div class="col">
+                        <button type="button" id="submit-new-note" class="btn btn-warning">Save Note</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="submit-buttons">
+                            <button type="submit" class="btn btn-info">Save and Check In</button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="submit-buttons">
+                            <button type="submit" class="btn btn-danger">Exit and Check In</button>
+                        </div>
+                    </div>
+                </div>
+            </form> 
         </main>
 
         <footer>

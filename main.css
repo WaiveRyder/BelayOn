@@ -35,6 +35,13 @@ menu {
 
 .navbar-link {
     text-decoration: none;
+    color: white;
+    padding: 0 1em;
+}
+
+.navbar-link-main {
+    text-decoration: none;
+    color: rgb(187, 187, 187);
     padding: 0 1em;
 }
 
@@ -51,10 +58,13 @@ menu {
 #github-link {
     float: right;
     margin-right: 10px;
+    color: white;
 }
 
 #author {
     margin-left: 10px;
+    color: white;
+    text-decoration: none;
 }
 
 * {

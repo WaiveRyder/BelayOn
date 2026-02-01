@@ -14,6 +14,7 @@
 
 .table {
     width: 70%;
+    overflow: auto;
 }
 
 #top-left {
@@ -37,6 +38,7 @@
 td {
     padding-right: 0em !important;
     padding-left: 0em !important;
+    white-space: nowrap;
 }
 
 .open-button {
@@ -48,6 +50,7 @@ td {
     padding-right: 0em;
     padding-left: 0em;
     white-space: nowrap;
+    height: 2em;
 }
 
 .middle-button {
@@ -59,6 +62,7 @@ td {
     padding-right: 0em;
     padding-left: 0em;
     white-space: nowrap;
+    height: 2em;
 }
 
 .close-button {
@@ -69,6 +73,7 @@ td {
     padding-right: 0em;
     padding-left: 0em;
     white-space: nowrap;
+    height: 2em;
 }
 
 #new-account-form {

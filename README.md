@@ -79,9 +79,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Visually appealing colors and layout. No overflowing elements.** - I aligned elements in a pleasing manner and used color to provide the page with a pleasing asthetic.
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I aligned elements in a pleasing manner and used color to provide the page with a pleasing asthetic. Added overflow protection to database lists.
 - [x] **Use of a CSS framework** - I used Bootstrap for modeling buttons, forms, and inputs.
-- [x] **All visual elements styled using CSS** - I styled all elements.
+- [x] **All visual elements styled using CSS** - I styled all elements such as buttons, inputs, forms, and images.
 - [x] **Responsive to window resizing using flexbox and/or grid display** - I used flexbox for elements in rows like likes and grid for elements in the database grid.
 - [x] **Use of a imported font** - I imported the SN Pro, Sans-Serif font from google.
 - [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I used elements, classes, ids, and pseudo selectors in my css.

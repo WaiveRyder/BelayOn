@@ -18,11 +18,11 @@ export default function App() {
 
               <nav>
                   <menu>
-                      <li><a class="navbar-link-main" href="index.html">Login</a></li>
-                      <li><a class="navbar-link" href="database.html">Database</a></li>
-                      <li><a class="navbar-link" href="createaccount.html">Create New Account</a></li>
-                      <li><a class="navbar-link" href="entrylookup.html">View Account</a></li>
-                      <li><a class="navbar-link" href="about.html">About</a></li>
+                    <li><NavLink className='navbar-link' to='login'>Login</NavLink></li>
+                    <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>
+                    <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>
+                    <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>
+                    <li><NavLink className='navbar-link' to='about'>About</NavLink></li>
                   </menu>
               </nav>
             </header>

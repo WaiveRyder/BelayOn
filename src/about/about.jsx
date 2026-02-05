@@ -14,7 +14,7 @@ export function About() {
                             What is BelayOn? 
                         </button>
                     </h2>
-                    <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
                             To put it simply, BelayOn is a member management tool designed for the modern climbing gym.
                         </div>
@@ -28,7 +28,7 @@ export function About() {
                             Purpose
                         </button>
                     </h2>
-                    <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
                             BelayOn's purpose is to help staff keep track of their members and guests 
                             efficiently, allowing guests to spend more time climbing and staff more time working.
@@ -43,7 +43,7 @@ export function About() {
                             Benefits
                         </button>
                     </h2>
-                    <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
                             BelayOn's purpose is to help staff keep track of their members and guests 
                             efficiently, allowing guests to spend more time climbing and staff more time working.
@@ -58,7 +58,7 @@ export function About() {
                             Quote of the Day
                         </button>
                     </h2>
-                    <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
                             "If you want to make the world a better place, take a look at yourself and make a change. Hooo"
                             <p><s>-Michael Jackson</s> -Lego Batman</p>

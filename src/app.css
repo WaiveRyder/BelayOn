@@ -46,6 +46,11 @@ menu {
     padding: 0 1em;
 }
 
+.navbar-link.active {
+    color: rgb(152, 211, 137);
+    font-weight: bold;
+}
+
 .navbar-link-main {
     text-decoration: none;
     color: rgb(187, 187, 187);

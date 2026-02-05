@@ -8,7 +8,7 @@ export function Createaccount() {
 
             <h2 className="center-text">Please enter required information below to create a new customer account.</h2>
 
-            <form id="grid-form" method="get" action="database.html">
+            <form id="grid-form" method="get" action="database">
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputName">First Name</label>

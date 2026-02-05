@@ -6,7 +6,7 @@ export function Login() {
         <main>
                 <h1>Welcome to BelayOn!</h1>
                 <h2>Please login or sign up below.</h2>
-                <form method="get" id='login' action="database.html">
+                <form method="get" id='login' action="database">
                     <div>
                         @ Email Address
                         <input type="email" className="form-control" required placeholder="enter email" />

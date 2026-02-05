@@ -8,7 +8,7 @@ export function Entrylookup() {
 
             <h2>Now Viewing Peter Quill</h2>
 
-            <form id="grid-form" method="get" action="database.html">
+            <form id="grid-form" method="get" action="database">
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputName">First Name</label>

@@ -18,7 +18,7 @@ export function Database() {
             <table className="table">
                 <caption>
                     List of accounts that match search criteria.
-                    <form id="new-account-form" action="createaccount.html">
+                    <form id="new-account-form" action="createaccount">
                         <button id="new-account-button">+</button>
                     </form>
                 </caption>
@@ -80,7 +80,7 @@ export function Database() {
                 </tbody>
             </table>
 
-            <form action="entrylookup.html">
+            <form action="entrylookup">
                 <button className="btn btn-danger">Check Out Selected Account</button>
             </form>
           </main>

@@ -18,7 +18,7 @@ export default function App() {
 
               <nav>
                   <menu>
-                    <li><NavLink className='navbar-link' to='login'>Login</NavLink></li>
+                    <li><NavLink className='navbar-link' to=''>Login</NavLink></li>
                     <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>
                     <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>
                     <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>
@@ -29,16 +29,22 @@ export default function App() {
 
             <Routes>
               <Route path='/' element={<Login />} exact />
-              <Route path='/play' element={<Play />} />
-              <Route path='/scores' element={<Scores />} />
+              <Route path='/login' element={<Login />} exact />
+              <Route path='/database' element={<Database />} />
+              <Route path='/createaccount' element={<Createaccount />} />
+              <Route path='/entrylookup' element={<Entrylookup />} />
               <Route path='/about' element={<About />} />
               <Route path='*' element={<NotFound />} />
             </Routes>
 
             <footer id="align-text">
               <p> <span id="author">Nathan Hunt</span><a id='github-link' href="https://github.com/WaiveRyder/BelayOn" target="_blank">GitHub</a></p>
-          </footer>
+            </footer>
           </body>
-        </BrowserRouter>    
+        </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }

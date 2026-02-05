@@ -3,7 +3,7 @@ import React from 'react';
 export function Login() {
   return (
     <div className="body">
-        <main className="container-fluid bg-secondary text-center">
+        <main>
                 <h1>Welcome to BelayOn!</h1>
                 <h2>Please login or sign up below.</h2>
                 <form method="get" id='login' action="database.html">

@@ -27,7 +27,13 @@ export default function App() {
               </nav>
             </header>
 
-            <main>App Components go here</main>
+            <Routes>
+              <Route path='/' element={<Login />} exact />
+              <Route path='/play' element={<Play />} />
+              <Route path='/scores' element={<Scores />} />
+              <Route path='/about' element={<About />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
 
             <footer id="align-text">
               <p> <span id="author">Nathan Hunt</span><a id='github-link' href="https://github.com/WaiveRyder/BelayOn" target="_blank">GitHub</a></p>

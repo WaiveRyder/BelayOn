@@ -5,7 +5,7 @@
   font-style: normal;
 }
 
-.app {
+.body {
     display: flex;
     flex-direction: column;
     margin: 0;

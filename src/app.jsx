@@ -17,6 +17,14 @@ export default function App() {
 
   const [selectedUser, updateSelection] = React.useState("")
 
+  const [databaseCustomers, updateDatabase] = React.useState([
+          {name: "Johnathan Tryall", birthday: "01/07/2002", email: "j.tryall@yahoo.com", type: "Member", lastVisit: "01/23/2006", checkedOut: "No"},
+          {name: "Samantha Smith", birthday: "07/12/2000", email: "s.smith@gmail.com", type: "Guest", lastVisit: "01/15/2026", checkedOut: "Terry"},
+          {name: "Peter Quill", birthday: "10/30/1980", email: "startlord@hotmail.com", type: "Guest", lastVisit: "01/17/2026", checkedOut: "No"},
+          {name: "Michael Jackson", birthday: "08/29/1958", email: "smoothcriminal@hehe.com", type: "Guest", lastVisit: "01/31/1988", checkedOut: "No"},
+          //{name: "End of list", birthday: "End of list", email: "End of list", type: "End of list", lastVisit: "End of list", checkedOut: "End of list"},
+      ])
+
   return (
         <BrowserRouter>
             <div className="body">
@@ -35,10 +43,10 @@ export default function App() {
             </header>
 
             <Routes>
-              <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
-              <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
-              <Route path='/database' element={<Database selectedUser={selectedUser} updateSelection={updateSelection}/>} />
-              <Route path='/createaccount' element={<Createaccount />} />
+              <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
+              <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
+              <Route path='/database' element={<Database databaseCustomers={databaseCustomers} selectedUser={selectedUser} updateSelection={updateSelection} />} />
+              <Route path='/createaccount' element={<Createaccount databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} />} />
               <Route path='/entrylookup' element={<Entrylookup />} />
               <Route path='/about' element={<About />} />
               <Route path='*' element={<NotFound />} />

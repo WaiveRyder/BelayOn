@@ -1,15 +1,7 @@
 import React from 'react';
 import './database.css';
 
-export const rows = [
-        {name: "Johnathan Tryall", birthday: "01/07/2002", email: "j.tryall@yahoo.com", type: "Member", lastVisit: "01/23/2006", checkedOut: "No"},
-        {name: "Samantha Smith", birthday: "07/12/2000", email: "s.smith@gmail.com", type: "Guest", lastVisit: "01/15/2026", checkedOut: "Terry"},
-        {name: "Peter Quill", birthday: "10/30/1980", email: "startlord@hotmail.com", type: "Guest", lastVisit: "01/17/2026", checkedOut: "No"},
-        {name: "Michael Jackson", birthday: "08/29/1958", email: "smoothcriminal@hehe.com", type: "Guest", lastVisit: "01/31/1988", checkedOut: "No"},
-        //{name: "End of list", birthday: "End of list", email: "End of list", type: "End of list", lastVisit: "End of list", checkedOut: "End of list"},
-    ]
-
-export function Database({selectedUser, updateSelection}) {
+export function Database({databaseCustomers, selectedUser, updateSelection}) {
     
 
 
@@ -46,7 +38,7 @@ export function Database({selectedUser, updateSelection}) {
                 </thead>
                 <tbody>
                     {
-                        rows.map((row, idx) => {
+                        databaseCustomers.map((row, idx) => {
                             return <tr key={idx}>
                                 <td><button className="open-button" onClick={() => {updateSelection(row.name)}}>{row.name}</button></td>
                                 <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.birthday}</button></td>

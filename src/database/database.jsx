@@ -1,16 +1,22 @@
 import React from 'react';
 import './database.css';
+import { useNavigate } from 'react-router-dom';
 
 export function Database({databaseCustomers, selectedUser, updateSelection}) {
-    
+    const nav = useNavigate()
 
+    function checkSelection() {
+        if(selectedUser.checkedOut === "No") {
+            nav("/entrylookup")
+        }
+    }
 
   return (
           <main>
             <h1>Database</h1>
 
             <p>Logged in as: User. All edits will be logged under this name.</p>
-            <p>Selected User: {selectedUser}</p>
+            <p>Selected User: {selectedUser.name}</p>
 
             <form id="search" method="get">
                 <input type="search" className="form-control" id="search-box" required placeholder="Name or Email" />
@@ -40,12 +46,12 @@ export function Database({databaseCustomers, selectedUser, updateSelection}) {
                     {
                         databaseCustomers.map((row, idx) => {
                             return <tr key={idx}>
-                                <td><button className="open-button" onClick={() => {updateSelection(row.name)}}>{row.name}</button></td>
-                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.birthday}</button></td>
-                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.email}</button></td>
-                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.type}</button></td>
-                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.lastVisit}</button></td>
-                                <td><button className="close-button" onClick={() => {updateSelection(row.name)}}>{row.checkedOut}</button></td>
+                                <td><button className="open-button" onClick={() => updateSelection(row)}>{row.name}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.birthday}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.email}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.type}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.lastVisit}</button></td>
+                                <td><button className="close-button" onClick={() => updateSelection(row)}>{row.checkedOut}</button></td>
                             </tr>
                         })
                     }
@@ -61,9 +67,7 @@ export function Database({databaseCustomers, selectedUser, updateSelection}) {
                 </tbody>
             </table>
 
-            <form action="entrylookup">
-                <button className="btn btn-danger">Check Out Selected Account</button>
-            </form>
+            <button className="btn btn-danger" onClick={checkSelection}>Check Out Selected Account</button>
           </main>
   );
 }

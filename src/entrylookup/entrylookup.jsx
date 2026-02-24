@@ -1,53 +1,84 @@
 import React from 'react';
 import './entrylookup.css'
+import { data, useNavigate } from 'react-router-dom';
 
 export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
-    const splitNames = selectedUser.name.split(" ");
+    const nav = useNavigate();
+    const index = databaseCustomers.indexOf(selectedUser)
+
+    const splitNames = selectedUser === "" ? "" : selectedUser.name.split(" ");
     const [firstName, updateFirstName] = React.useState(splitNames[0])
     const [middleName, updateMiddleName] = React.useState(splitNames.length === 3 ? splitNames[1] : "")
     const [lastName, updateLastName] = React.useState(splitNames.length === 3 ? splitNames[2] : splitNames[1])
-    console.log(new Date(selectedUser.birthday).toLocaleDateString())
+
+    const [newEmail, updateEmail] = (selectedUser === "") ? "" : React.useState(selectedUser.email)
+    const [newBirthday, updateBirthday] = (selectedUser === "") ? "" : React.useState(selectedUser.birthday)
+    const [newType, updateType] = (selectedUser === "") ? "" : React.useState(selectedUser.type)
+
+    const [changesMade, updateChangesMade] = React.useState(true)
+
+    function save() {
+        if(changesMade) {
+            const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
+            const updatedUser = {...selectedUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: "No"}
+            
+            const newDatabase = [
+                ...databaseCustomers.slice(0, index),
+                updatedUser,
+                ...databaseCustomers.slice(index+1)
+            ]
+            updateDatabase(newDatabase)
+            updateSelectedUser(updatedUser)
+            localStorage.setItem("database", JSON.stringify(newDatabase))
+            nav("/database")
+        } else {
+            updateSelectedUser({...selectedUser, checkedOut: "No"})
+            updateDatabase([...databaseCustomers])
+            nav("/database")
+        }
+        
+    }
 
 
   return (
             <main>
             <h1>Account Viwer</h1>
 
-            <h2>Now Viewing Peter Quill</h2>
+            <h2>Now Viewing {(selectedUser === "") ? "ERROR: NO CUSTOMER SELECTED" : splitNames}</h2>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputName">First Name</label>
-                        <input type="text" className="form-control" id="inputName" defaultValue={firstName} placeholder="First Name" required />
+                        <input type="text" className="form-control" id="inputName" defaultValue={firstName} onChange={(e) => updateFirstName(e.target.value)} placeholder="First Name" required />
                     </div>
                     <div className="col">
                         <label htmlFor="inputMiddleName">Middle Name</label>
-                        <input type="text" className="form-control" id="inputMiddleName" defaultValue={middleName} placeholder="Middle Name" />
+                        <input type="text" className="form-control" id="inputMiddleName" defaultValue={middleName} onChange={(e) => updateMiddleName(e.target.value)} placeholder="Middle Name" />
                     </div>
                     <div className="col">
                         <label htmlFor="inputLastName">Last Name</label>
-                        <input type="text" className="form-control" id="inputLastName" defaultValue={lastName} placeholder="Last Name" required />
+                        <input type="text" className="form-control" id="inputLastName" defaultValue={lastName} onChange={(e) => updateLastName(e.target.value)} placeholder="Last Name" required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputDOB">Date of Birth</label>
-                        <input type="date" className="form-control" id="inputDOB" defaultValue={new Date(selectedUser.birthday).toISOString().split("T")[0]} required />
+                        <input type="date" className="form-control" id="inputDOB" defaultValue={(selectedUser === "") ? "" : new Date(newBirthday).toISOString().split("T")[0]} onChange={(e) => updateBirthday(e.target.value)} required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputEmail">Email</label>
-                        <input type="email" className="form-control" id="inputEmail" defaultValue={selectedUser.email} placeholder="Email" required />
+                        <input type="email" className="form-control" id="inputEmail" defaultValue={newEmail} onChange={(e) => updateEmail(e.target.value)} placeholder="Email" required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="memberType">Type</label>
-                        <select name="type" id="memberType" className="form-control" defaultValue={selectedUser.type}>
+                        <select name="type" id="memberType" className="form-control" defaultValue={newType} onChange={(e) => updateType(e.target.value)}>
                             <option value="Guest">Guest</option>
                             <option value="Member">Member</option>
                         </select>
@@ -57,7 +88,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
                 <div className="row">
                     <div className="col">
                         <label htmlFor="lastVisit">Last Visit</label>
-                        <input className="form-control" type="date" id="lastVisit" readOnly value={selectedUser.lastVisit} />
+                        <input className="form-control" type="text" id="lastVisit" readOnly value={selectedUser.lastVisit} />
                     </div>
                 </div>
 
@@ -84,7 +115,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
                 <div className="row">
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info">Save and Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save}>Save and Check In</button>
                         </div>
                     </div>
 

@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
+import { Logout } from './login/logout';
 import { Database } from './database/database';
 import { Entrylookup } from './entrylookup/entrylookup';
 import { Createaccount } from './createaccount/createaccount';
@@ -23,7 +24,7 @@ export default function App() {
 
               <nav>
                   <menu>
-                    <li><NavLink className='navbar-link' to=''>{loggedIn}</NavLink></li>
+                    {(loggedIn === "Login") ? <li><NavLink className='navbar-link' to=''>Login</NavLink></li> : <Logout updateLoggedIn={updateLoggedIn} />}
                     {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>}
                     {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>}
                     {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>}

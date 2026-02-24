@@ -2,7 +2,7 @@ import React from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
 
-export function Database({databaseCustomers, selectedUser, updateSelection}) {
+export function Database({databaseCustomers, selectedUser, updateSelectedUser}) {
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
 
@@ -49,12 +49,12 @@ export function Database({databaseCustomers, selectedUser, updateSelection}) {
                     {
                         databaseCustomers.map((row, idx) => {
                             return <tr key={idx}>
-                                <td><button className="open-button" onClick={() => updateSelection(row)}>{row.name}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.birthday}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.email}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.type}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelection(row)}>{row.lastVisit}</button></td>
-                                <td><button className="close-button" onClick={() => updateSelection(row)}>{row.checkedOut}</button></td>
+                                <td><button className="open-button" onClick={() => updateSelectedUser(row)}>{row.name}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.birthday}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.email}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.type}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.lastVisit}</button></td>
+                                <td><button className="close-button" onClick={() => updateSelectedUser(row)}>{row.checkedOut}</button></td>
                             </tr>
                         })
                     }

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './app.css';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, data, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Logout } from './login/logout';
 import { Database } from './database/database';
@@ -15,7 +15,7 @@ export default function App() {
   const [password, setPassword] = React.useState("");
   const [loggedIn, updateLoggedIn] = React.useState("Login");
 
-  const [selectedUser, updateSelection] = React.useState("")
+  const [selectedUser, updateSelectedUser] = React.useState("")
 
   const [databaseCustomers, updateDatabase] = React.useState(JSON.parse(localStorage.getItem("database")) || [
           {name: "Johnathan Tryall", birthday: "1/07/2002", email: "j.tryall@yahoo.com", type: "Member", lastVisit: "1/23/2006", checkedOut: "No"},
@@ -45,9 +45,9 @@ export default function App() {
             <Routes>
               <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
               <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
-              <Route path='/database' element={<Database databaseCustomers={databaseCustomers} selectedUser={selectedUser} updateSelection={updateSelection} />} />
+              <Route path='/database' element={<Database databaseCustomers={databaseCustomers} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} />} />
               <Route path='/createaccount' element={<Createaccount databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} />} />
-              <Route path='/entrylookup' element={<Entrylookup />} />
+              <Route path='/entrylookup' element={<Entrylookup databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />
               <Route path='/about' element={<About />} />
               <Route path='*' element={<NotFound />} />
             </Routes>

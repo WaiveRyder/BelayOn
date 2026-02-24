@@ -1,47 +1,53 @@
 import React from 'react';
 import './entrylookup.css'
 
-export function Entrylookup() {
+export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
+    const splitNames = selectedUser.name.split(" ");
+    const [firstName, updateFirstName] = React.useState(splitNames[0])
+    const [middleName, updateMiddleName] = React.useState(splitNames.length === 3 ? splitNames[1] : "")
+    const [lastName, updateLastName] = React.useState(splitNames.length === 3 ? splitNames[2] : splitNames[1])
+    console.log(new Date(selectedUser.birthday).toLocaleDateString())
+
+
   return (
             <main>
             <h1>Account Viwer</h1>
 
             <h2>Now Viewing Peter Quill</h2>
 
-            <form id="grid-form" method="get" action="database">
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputName">First Name</label>
-                        <input type="text" className="form-control" id="inputName" defaultValue="Peter" placeholder="First Name" required />
+                        <input type="text" className="form-control" id="inputName" defaultValue={firstName} placeholder="First Name" required />
                     </div>
                     <div className="col">
                         <label htmlFor="inputMiddleName">Middle Name</label>
-                        <input type="text" className="form-control" id="inputMiddleName" defaultValue="" placeholder="Middle Name" />
+                        <input type="text" className="form-control" id="inputMiddleName" defaultValue={middleName} placeholder="Middle Name" />
                     </div>
                     <div className="col">
                         <label htmlFor="inputLastName">Last Name</label>
-                        <input type="text" className="form-control" id="inputLastName" defaultValue="Quill" placeholder="Last Name" required />
+                        <input type="text" className="form-control" id="inputLastName" defaultValue={lastName} placeholder="Last Name" required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputDOB">Date of Birth</label>
-                        <input type="date" className="form-control" id="inputDOB" defaultValue="1980-10-30" required />
+                        <input type="date" className="form-control" id="inputDOB" defaultValue={new Date(selectedUser.birthday).toISOString().split("T")[0]} required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputEmail">Email</label>
-                        <input type="email" className="form-control" id="inputEmail" defaultValue="starlord@hotmail.com" placeholder="Email" required />
+                        <input type="email" className="form-control" id="inputEmail" defaultValue={selectedUser.email} placeholder="Email" required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="memberType">Type</label>
-                        <select name="type" id="memberType" className="form-control" defaultValue="Guest">
+                        <select name="type" id="memberType" className="form-control" defaultValue={selectedUser.type}>
                             <option value="Guest">Guest</option>
                             <option value="Member">Member</option>
                         </select>
@@ -51,7 +57,7 @@ export function Entrylookup() {
                 <div className="row">
                     <div className="col">
                         <label htmlFor="lastVisit">Last Visit</label>
-                        <input className="form-control" type="date" id="lastVisit" readOnly value="2026-01-17" />
+                        <input className="form-control" type="date" id="lastVisit" readOnly value={selectedUser.lastVisit} />
                     </div>
                 </div>
 
@@ -88,7 +94,6 @@ export function Entrylookup() {
                         </div>
                     </div>
                 </div>
-            </form> 
         </main>
   );
 }

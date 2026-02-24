@@ -3,11 +3,14 @@ import './database.css';
 import { useNavigate } from 'react-router-dom';
 
 export function Database({databaseCustomers, selectedUser, updateSelection}) {
+    const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
 
     function checkSelection() {
         if(selectedUser.checkedOut === "No") {
             nav("/entrylookup")
+        } else {
+            updateUseMsg("This account is already in use by " + selectedUser.checkedOut)
         }
     }
 
@@ -68,6 +71,7 @@ export function Database({databaseCustomers, selectedUser, updateSelection}) {
             </table>
 
             <button className="btn btn-danger" onClick={checkSelection}>Check Out Selected Account</button>
+            <p style={{color: "red"}}><b>{inUseMsg}</b></p>
           </main>
   );
 }

@@ -1,12 +1,24 @@
 import React from 'react';
 import './database.css';
 
-export function Database() {
+export const rows = [
+        {name: "Johnathan Tryall", birthday: "01/07/2002", email: "j.tryall@yahoo.com", type: "Member", lastVisit: "01/23/2006", checkedOut: "No"},
+        {name: "Samantha Smith", birthday: "07/12/2000", email: "s.smith@gmail.com", type: "Guest", lastVisit: "01/15/2026", checkedOut: "Terry"},
+        {name: "Peter Quill", birthday: "10/30/1980", email: "startlord@hotmail.com", type: "Guest", lastVisit: "01/17/2026", checkedOut: "No"},
+        {name: "Michael Jackson", birthday: "08/29/1958", email: "smoothcriminal@hehe.com", type: "Guest", lastVisit: "01/31/1988", checkedOut: "No"},
+        //{name: "End of list", birthday: "End of list", email: "End of list", type: "End of list", lastVisit: "End of list", checkedOut: "End of list"},
+    ]
+
+export function Database({selectedUser, updateSelection}) {
+    
+
+
   return (
           <main>
             <h1>Database</h1>
 
             <p>Logged in as: User. All edits will be logged under this name.</p>
+            <p>Selected User: {selectedUser}</p>
 
             <form id="search" method="get">
                 <input type="search" className="form-control" id="search-box" required placeholder="Name or Email" />
@@ -33,41 +45,18 @@ export function Database() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><button className="open-button">Johnathan Tryall</button></td>
-                        <td><button className="middle-button">01/07/2002</button></td>
-                        <td><button className="middle-button">j.tryall@yahoo.com</button></td>
-                        <td><button className="middle-button">Member</button></td>
-                        <td><button className="middle-button">01/23/2026</button></td>
-                        <td><button className="close-button">No</button></td>
-                    </tr>
-
-                    <tr>
-                        <td><button className="open-button">Samantha Smith</button></td>
-                        <td><button className="middle-button">07/12/2000</button></td>
-                        <td><button className="middle-button">s.smith@gmail.com</button></td>
-                        <td><button className="middle-button">Guest</button></td>
-                        <td><button className="middle-button">01/15/2026</button></td>
-                        <td><button className="close-button">Terry</button></td>
-                    </tr>
-
-                    <tr>
-                        <td><button className="open-button">Peter Quill</button></td>
-                        <td><button className="middle-button">10/30/1980</button></td>
-                        <td><button className="middle-button">starlord@hotmail.com</button></td>
-                        <td><button className="middle-button">Guest</button></td>
-                        <td><button className="middle-button">01/17/2026</button></td>
-                        <td><button className="close-button">No</button></td>
-                    </tr>
-
-                    <tr>
-                        <td><button className="open-button">Michael Jackson</button></td>
-                        <td><button className="middle-button">08/29/1958</button></td>
-                        <td><button className="middle-button">smoothcriminal@hehe.com</button></td>
-                        <td><button className="middle-button">Guest</button></td>
-                        <td><button className="middle-button">01/31/1988</button></td>
-                        <td><button className="close-button">No</button></td>
-                    </tr>
+                    {
+                        rows.map((row, idx) => {
+                            return <tr key={idx}>
+                                <td><button className="open-button" onClick={() => {updateSelection(row.name)}}>{row.name}</button></td>
+                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.birthday}</button></td>
+                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.email}</button></td>
+                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.type}</button></td>
+                                <td><button className="middle-button" onClick={() => {updateSelection(row.name)}}>{row.lastVisit}</button></td>
+                                <td><button className="close-button" onClick={() => {updateSelection(row.name)}}>{row.checkedOut}</button></td>
+                            </tr>
+                        })
+                    }
 
                     <tr>
                         <td id="bottom-left"><button className="open-button">End of list</button></td>

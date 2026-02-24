@@ -14,7 +14,7 @@
 
 .table {
     width: 70%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #top-left {

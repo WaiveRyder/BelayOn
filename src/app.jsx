@@ -15,6 +15,7 @@ export default function App() {
   const [password, setPassword] = React.useState("");
   const [loggedIn, updateLoggedIn] = React.useState("Login");
 
+  const [selectedUser, updateSelection] = React.useState("")
 
   return (
         <BrowserRouter>
@@ -36,7 +37,7 @@ export default function App() {
             <Routes>
               <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
               <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
-              <Route path='/database' element={<Database />} />
+              <Route path='/database' element={<Database selectedUser={selectedUser} updateSelection={updateSelection}/>} />
               <Route path='/createaccount' element={<Createaccount />} />
               <Route path='/entrylookup' element={<Entrylookup />} />
               <Route path='/about' element={<About />} />

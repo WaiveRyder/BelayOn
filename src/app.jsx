@@ -10,6 +10,11 @@ import { Createaccount } from './createaccount/createaccount';
 import { About } from './about/about';
 
 export default function App() {
+  const [email, setEmail] = React.useState(localStorage.getItem("user") || "");
+  const [password, setPassword] = React.useState("");
+  const [loggedIn, updateLoggedIn] = React.useState("Login");
+
+
   return (
         <BrowserRouter>
             <div className="body">
@@ -18,18 +23,18 @@ export default function App() {
 
               <nav>
                   <menu>
-                    <li><NavLink className='navbar-link' to=''>Login</NavLink></li>
-                    <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>
-                    <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>
-                    <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>
+                    <li><NavLink className='navbar-link' to=''>{loggedIn}</NavLink></li>
+                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>}
+                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>}
+                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>}
                     <li><NavLink className='navbar-link' to='about'>About</NavLink></li>
                   </menu>
               </nav>
             </header>
 
             <Routes>
-              <Route path='/' element={<Login />} exact />
-              <Route path='/login' element={<Login />} exact />
+              <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
+              <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn}/>} exact />
               <Route path='/database' element={<Database />} />
               <Route path='/createaccount' element={<Createaccount />} />
               <Route path='/entrylookup' element={<Entrylookup />} />

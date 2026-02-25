@@ -38,7 +38,6 @@ export default function App() {
                     {loggedIn === false ? <li><NavLink className='navbar-link' to=''>Login</NavLink></li> : <Logout updateLoggedIn={updateLoggedIn} />}
                     {loggedIn === true && <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>}
                     {loggedIn === true && <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>}
-                    {loggedIn === true && <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>}
                     <li><NavLink className='navbar-link' to='about'>About</NavLink></li>
                   </menu>
               </nav>

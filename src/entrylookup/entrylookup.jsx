@@ -32,8 +32,14 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
             localStorage.setItem("database", JSON.stringify(newDatabase))
             nav("/database")
         } else {
-            updateSelectedUser({...selectedUser, checkedOut: "No"})
-            updateDatabase([...databaseCustomers])
+            const updatedUser = {...selectedUser, checkedOut: "No"}
+            updateSelectedUser(updatedUser)
+            const newDatabase = [
+                ...databaseCustomers.slice(0, index),
+                updatedUser,
+                ...databaseCustomers(index+1)
+            ]
+            updateDatabase(newDatabase)
             nav("/database")
         }
         
@@ -108,20 +114,20 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
                         <textarea className="form-control" name="note" id="new-note-form" placeholder="Type new note..."></textarea>
                     </div>
                     <div className="col">
-                        <button type="button" id="submit-new-note" className="btn btn-warning">Save Note</button>
+                        <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(selectedUser === "") ? true : false}>Save Note</button>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info" onClick={save}>Save and Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save} disabled={(selectedUser === "") ? true : false}>Save and Check In</button>
                         </div>
                     </div>
 
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger">Exit and Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={save} disabled={(selectedUser === "") ? true : false}>Exit and Check In</button>
                         </div>
                     </div>
                 </div>

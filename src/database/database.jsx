@@ -9,7 +9,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
     function checkSelection() {
         const index = databaseCustomers.indexOf(selectedUser)
 
-        if(selectedUser.checkedOut === "No") {
+        if(selectedUser.checkedOut === "No" || selectedUser.checkedOut === email) {
             const newUser = {...selectedUser, checkedOut: email}
             updateSelectedUser(newUser)
             const newDatabase = [

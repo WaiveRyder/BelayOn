@@ -6,7 +6,7 @@ export function Logout({updateLoggedIn}) {
 
     function logoutUser() {
         localStorage.removeItem("user")
-        updateLoggedIn("Login")
+        updateLoggedIn(false)
         nav("/login")
     }
 

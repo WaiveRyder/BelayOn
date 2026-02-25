@@ -13,7 +13,7 @@ import { About } from './about/about';
 export default function App() {
   const [email, setEmail] = React.useState(localStorage.getItem("user") || "");
   const [password, setPassword] = React.useState("");
-  const [loggedIn, updateLoggedIn] = React.useState("Login");
+  const [loggedIn, updateLoggedIn] = React.useState((localStorage.getItem("user") || "") !== "");
 
   const [selectedUser, updateSelectedUser] = React.useState("")
 
@@ -33,10 +33,10 @@ export default function App() {
 
               <nav>
                   <menu>
-                    {(loggedIn === "Login") ? <li><NavLink className='navbar-link' to=''>Login</NavLink></li> : <Logout updateLoggedIn={updateLoggedIn} />}
-                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>}
-                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>}
-                    {(localStorage.getItem("user") || "") !== "" && <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>}
+                    {loggedIn === false ? <li><NavLink className='navbar-link' to=''>Login</NavLink></li> : <Logout updateLoggedIn={updateLoggedIn} />}
+                    {loggedIn === true && <li><NavLink className='navbar-link' to='database'>Database</NavLink></li>}
+                    {loggedIn === true && <li><NavLink className='navbar-link' to='createaccount'>Create New Customer</NavLink></li>}
+                    {loggedIn === true && <li><NavLink className='navbar-link' to='entrylookup'>View Customer</NavLink></li>}
                     <li><NavLink className='navbar-link' to='about'>About</NavLink></li>
                   </menu>
               </nav>

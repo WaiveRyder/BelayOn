@@ -6,18 +6,14 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
 
     function registerUser() {
         localStorage.setItem("user", email)
-        updateLoggedIn("Logout")
+        updateLoggedIn(true)
         nav("/database")
     }
 
     function loginUser() {
         localStorage.setItem("user", email)
-        updateLoggedIn("Logout")
+        updateLoggedIn(true)
         nav("/database")
-    }
-
-    function logoutUser() {
-        localStorage.removeItem("user")
     }
 
   return (

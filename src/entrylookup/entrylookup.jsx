@@ -18,8 +18,15 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
     const [changesMade, updateChangesMade] = React.useState(true)
 
     function save() {
-        if(changesMade) {
-            const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
+        const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
+
+        if(
+            selectedUser.name != newName &&
+            selectedUser.email != newEmail &&
+            selectedUser.birthday != newBirthday &&
+            selectedUser.type != newType 
+        ) {
+            
             const updatedUser = {...selectedUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: "No"}
             
             const newDatabase = [
@@ -37,7 +44,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
             const newDatabase = [
                 ...databaseCustomers.slice(0, index),
                 updatedUser,
-                ...databaseCustomers(index+1)
+                ...databaseCustomers.slice(index+1)
             ]
             updateDatabase(newDatabase)
             nav("/database")

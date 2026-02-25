@@ -21,9 +21,9 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
         const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
 
         if(
-            selectedUser.name != newName &&
-            selectedUser.email != newEmail &&
-            selectedUser.birthday != newBirthday &&
+            selectedUser.name != newName ||
+            selectedUser.email != newEmail ||
+            selectedUser.birthday != newBirthday ||
             selectedUser.type != newType 
         ) {
             
@@ -39,17 +39,21 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
             localStorage.setItem("database", JSON.stringify(newDatabase))
             nav("/database")
         } else {
-            const updatedUser = {...selectedUser, checkedOut: "No"}
-            updateSelectedUser(updatedUser)
-            const newDatabase = [
-                ...databaseCustomers.slice(0, index),
-                updatedUser,
-                ...databaseCustomers.slice(index+1)
-            ]
-            updateDatabase(newDatabase)
-            nav("/database")
+            noSave()
         }
         
+    }
+
+    function noSave() {
+        const updatedUser = {...selectedUser, checkedOut: "No"}
+        updateSelectedUser(updatedUser)
+        const newDatabase = [
+            ...databaseCustomers.slice(0, index),
+            updatedUser,
+            ...databaseCustomers.slice(index+1)
+        ]
+        updateDatabase(newDatabase)
+        nav("/database")
     }
 
 
@@ -134,7 +138,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
 
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger" onClick={save} disabled={(selectedUser === "") ? true : false}>Exit and Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(selectedUser === "") ? true : false}>Exit and Check In</button>
                         </div>
                     </div>
                 </div>

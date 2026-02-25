@@ -47,7 +47,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
                 updateSearchData(oldSearchQuery)
                 localStorage.setItem("database", JSON.stringify(updatedDatabase))
             }
-        }, 1000)
+        }, 5000)
 
         return () => {clearInterval(intervalID)}
     })

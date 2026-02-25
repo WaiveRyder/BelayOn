@@ -49,7 +49,7 @@ export default function App() {
               <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
               <Route path='/database' element={<Database email={email} databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} />} />
               <Route path='/createaccount' element={<Createaccount databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} />} />
-              <Route path='/entrylookup' element={<Entrylookup databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />
+              <Route path='/entrylookup' element={<Entrylookup email={email} databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />
               <Route path='/about' element={<About />} />
               <Route path='*' element={<NotFound />} />
             </Routes>

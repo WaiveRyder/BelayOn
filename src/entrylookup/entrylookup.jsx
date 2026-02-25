@@ -2,7 +2,7 @@ import React from 'react';
 import './entrylookup.css'
 import { data, useNavigate } from 'react-router-dom';
 
-export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
+export function Entrylookup({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
     const nav = useNavigate();
     const index = databaseCustomers.indexOf(selectedUser)
 
@@ -14,8 +14,6 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
     const [newEmail, updateEmail] = (selectedUser === "") ? "" : React.useState(selectedUser.email)
     const [newBirthday, updateBirthday] = (selectedUser === "") ? "" : React.useState(selectedUser.birthday)
     const [newType, updateType] = (selectedUser === "") ? "" : React.useState(selectedUser.type)
-
-    const [changesMade, updateChangesMade] = React.useState(true)
 
     function save() {
         const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
@@ -61,7 +59,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
             <main>
             <h1>Account Viwer</h1>
 
-            <h2>Now Viewing {(selectedUser === "") ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
+            <h2>Now Viewing {(selectedUser === "" || selectedUser.checkedOut != email) ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
 
                 <div className="row">
                     <div className="col">
@@ -125,20 +123,20 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
                         <textarea className="form-control" name="note" id="new-note-form" placeholder="Type new note..."></textarea>
                     </div>
                     <div className="col">
-                        <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(selectedUser === "") ? true : false}>Save Note</button>
+                        <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Save Note</button>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info" onClick={save} disabled={(selectedUser === "") ? true : false}>Save and Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save} disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Save and Check In</button>
                         </div>
                     </div>
 
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(selectedUser === "") ? true : false}>Exit and Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Exit and Check In</button>
                         </div>
                     </div>
                 </div>

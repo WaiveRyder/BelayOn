@@ -1,10 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
 
 export function Database({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
+    let [listOfUsers, updateListOfUsers] = React.useState(JSON.parse(localStorage.getItem("listOfUsers")) || ["John H.", "Ellie S.", "Ian M.", "Alan G."])
+
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            //This will be replaced by a websocket call
+            const indexUsers = Math.floor(Math.random() * listOfUsers.length)
+
+            const indexAccount = Math.floor(Math.random() * databaseCustomers.length)
+            let randomAccount = databaseCustomers[indexAccount]
+
+            if (randomAccount.checkedOut === "No" && listOfUsers.length > 0) {
+                randomAccount = {...randomAccount, checkedOut: listOfUsers[indexUsers]}
+                const updatedDatabase = [
+                    ...databaseCustomers.slice(0, indexAccount),
+                    randomAccount,
+                    ...databaseCustomers.slice(indexAccount+1)
+                ]
+                updateDatabase(updatedDatabase)
+                let newList = listOfUsers.filter(name => name !== listOfUsers[indexUsers])
+                updateListOfUsers(newList)
+                localStorage.setItem("listOfUsers", JSON.stringify(newList))
+            } else if (randomAccount.checkedOut !== email && randomAccount.checkedOut !== "No") {
+                let newList = listOfUsers.concat(randomAccount.checkedOut)
+                updateListOfUsers(newList)
+                localStorage.setItem("listOfUsers", JSON.stringify(newList))
+                randomAccount = {...randomAccount, checkedOut: "No"}
+                const updatedDatabase = [
+                    ...databaseCustomers.slice(0, indexAccount),
+                    randomAccount,
+                    ...databaseCustomers.slice(indexAccount+1)
+                ]
+                updateDatabase(updatedDatabase)
+            }
+        }, 3000)
+
+        return () => {clearInterval(intervalID)}
+    })
 
     function checkSelection() {
         const index = databaseCustomers.indexOf(selectedUser)
@@ -28,7 +65,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
           <main>
             <h1>Database</h1>
 
-            <p>Logged in as: User. All edits will be logged under this name.</p>
+            <p>Logged in as: {email}. All edits will be logged under this name.</p>
             <p>Selected User: {selectedUser.name}</p>
 
             <form id="search" method="get">

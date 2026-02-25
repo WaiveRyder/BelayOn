@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './about.css';
 
 export function About() {
+
+    function getQuote() {
+        //Replaced by API call later
+        return {
+            quote: "\"If you want to make the world a better place, take a look at yourself and make a change. Hooo\"",
+            author: "-Lego Batman"
+        }
+    }
+
   return (
     <main>
             <h1>About</h1>
@@ -60,8 +69,8 @@ export function About() {
                     </h2>
                     <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
-                            "If you want to make the world a better place, take a look at yourself and make a change. Hooo"
-                            <p><s>-Michael Jackson</s> -Lego Batman</p>
+                            {getQuote().quote}
+                            <p>{getQuote().author}</p>
                         </div>
                     </div>
                 </div>

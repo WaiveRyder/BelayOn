@@ -24,6 +24,8 @@ export default function App() {
           {name: "Samantha Smith", birthday: "7/12/2000", email: "s.smith@gmail.com", type: "Guest", lastVisit: "1/15/2026", checkedOut: "Terry"},
           {name: "Peter Quill", birthday: "10/30/1980", email: "startlord@hotmail.com", type: "Guest", lastVisit: "1/17/2026", checkedOut: "No"},
           {name: "Michael Jackson", birthday: "8/29/1958", email: "smoothcriminal@hehe.com", type: "Guest", lastVisit: "1/31/1988", checkedOut: "No"},
+          {name: "Peter Parker", birthday: "8/10/2006", email: "notspiderman@gmail.com", type: "Member", lastVisit: "1/25/2026", checkedOut: "No"},
+          {name: "Loki Laufeyson", birthday: "12/17/965", email: "godofmischeif@hotmail.com", type: "Guest", lastVisit: "2/25/2026", checkedOut: "No"},
           //{name: "End of list", birthday: "End of list", email: "End of list", type: "End of list", lastVisit: "End of list", checkedOut: "End of list"},
       ])
 

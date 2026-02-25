@@ -26,6 +26,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
                 let newList = listOfUsers.filter(name => name !== listOfUsers[indexUsers])
                 updateListOfUsers(newList)
                 localStorage.setItem("listOfUsers", JSON.stringify(newList))
+                localStorage.setItem("database", JSON.stringify(updatedDatabase))
             } else if (randomAccount.checkedOut !== email && randomAccount.checkedOut !== "No") {
                 let newList = listOfUsers.concat(randomAccount.checkedOut)
                 updateListOfUsers(newList)
@@ -37,16 +38,33 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
                     ...databaseCustomers.slice(indexAccount+1)
                 ]
                 updateDatabase(updatedDatabase)
+                localStorage.setItem("database", JSON.stringify(updatedDatabase))
             }
-        }, 3000)
+        }, 5000)
 
         return () => {clearInterval(intervalID)}
     })
 
+    useEffect(() => {
+        updateSelectedUser("")
+        for (let i = 0; i < databaseCustomers.length; i++) {
+            if(databaseCustomers[i].checkedOut === email) {
+                const account = {...databaseCustomers[i], checkedOut: "No"}
+                const updatedDatabase = [
+                    ...databaseCustomers.slice(0, i),
+                    account,
+                    ...databaseCustomers.slice(i+1)
+                ]
+                updateDatabase(updatedDatabase)
+                localStorage.setItem("database", JSON.stringify(updatedDatabase))
+            }
+        }
+    }, [])
+
     function checkSelection() {
         const index = databaseCustomers.indexOf(selectedUser)
 
-        if(selectedUser.checkedOut === "No" || selectedUser.checkedOut === email) {
+        if(selectedUser !== "" && (selectedUser.checkedOut === "No" || selectedUser.checkedOut === email)) {
             const newUser = {...selectedUser, checkedOut: email}
             updateSelectedUser(newUser)
             const newDatabase = [
@@ -56,6 +74,8 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
             ]
             updateDatabase(newDatabase)
             nav("/entrylookup")
+        } else if(selectedUser === "") {
+            updateUseMsg("Please Select An Account")
         } else {
             updateUseMsg("This account is already in use by " + selectedUser.checkedOut)
         }
@@ -65,7 +85,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
           <main>
             <h1>Database</h1>
 
-            <p>Logged in as: {email}. All edits will be logged under this name.</p>
+            <p>Logged in as: {email}.</p>
             <p>Selected User: {selectedUser.name}</p>
 
             <form id="search" method="get">

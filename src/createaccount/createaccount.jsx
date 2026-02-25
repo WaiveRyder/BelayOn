@@ -63,7 +63,7 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
 
                 <div className="row">
                     <div id="create-account" className="col">
-                        <button className="btn btn-danger" onClick={addAccount}>Create New Account</button>
+                        <button className="btn btn-danger" disabled={!firstName || !lastName || !birthday || !email} onClick={addAccount}>Create New Account</button>
                     </div>
                 </div>
         </main>

@@ -2,12 +2,22 @@ import React from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
 
-export function Database({databaseCustomers, selectedUser, updateSelectedUser}) {
+export function Database({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
 
     function checkSelection() {
+        const index = databaseCustomers.indexOf(selectedUser)
+
         if(selectedUser.checkedOut === "No") {
+            const newUser = {...selectedUser, checkedOut: email}
+            updateSelectedUser(newUser)
+            const newDatabase = [
+                ...databaseCustomers.slice(0, index),
+                newUser,
+                ...databaseCustomers.slice(index+1)
+            ]
+            updateDatabase(newDatabase)
             nav("/entrylookup")
         } else {
             updateUseMsg("This account is already in use by " + selectedUser.checkedOut)

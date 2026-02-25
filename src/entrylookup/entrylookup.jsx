@@ -2,38 +2,37 @@ import React from 'react';
 import './entrylookup.css'
 import { data, useNavigate } from 'react-router-dom';
 
-export function Entrylookup({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
+export function Entrylookup({email, databaseCustomers, updateDatabase, selectedUser}) {
     const nav = useNavigate();
-    const index = databaseCustomers.indexOf(selectedUser)
+    const getUser = selectedUser === "" ? "" : databaseCustomers[selectedUser]
 
-    const splitNames = selectedUser === "" ? "" : selectedUser.name.split(" ");
+    const splitNames = getUser === "" ? "" : getUser.name.split(" ");
     const [firstName, updateFirstName] = React.useState(splitNames[0])
     const [middleName, updateMiddleName] = React.useState(splitNames.length === 3 ? splitNames[1] : "")
     const [lastName, updateLastName] = React.useState(splitNames.length === 3 ? splitNames[2] : splitNames[1])
 
-    const [newEmail, updateEmail] = (selectedUser === "") ? "" : React.useState(selectedUser.email)
-    const [newBirthday, updateBirthday] = (selectedUser === "") ? "" : React.useState(selectedUser.birthday)
-    const [newType, updateType] = (selectedUser === "") ? "" : React.useState(selectedUser.type)
+    const [newEmail, updateEmail] = (getUser === "") ? "" : React.useState(getUser.email)
+    const [newBirthday, updateBirthday] = (getUser === "") ? "" : React.useState(getUser.birthday)
+    const [newType, updateType] = (getUser === "") ? "" : React.useState(getUser.type)
 
     function save() {
         const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
 
         if(
-            selectedUser.name != newName ||
-            selectedUser.email != newEmail ||
-            selectedUser.birthday != newBirthday ||
-            selectedUser.type != newType 
+            getUser.name != newName ||
+            getUser.email != newEmail ||
+            getUser.birthday != newBirthday ||
+            getUser.type != newType 
         ) {
             
-            const updatedUser = {...selectedUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: "No"}
+            const updatedUser = {...getUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: "No"}
             
             const newDatabase = [
-                ...databaseCustomers.slice(0, index),
+                ...databaseCustomers.slice(0, selectedUser),
                 updatedUser,
-                ...databaseCustomers.slice(index+1)
+                ...databaseCustomers.slice(selectedUser+1)
             ]
             updateDatabase(newDatabase)
-            updateSelectedUser(updatedUser)
             localStorage.setItem("database", JSON.stringify(newDatabase))
             nav("/database")
         } else {
@@ -43,12 +42,11 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
     }
 
     function noSave() {
-        const updatedUser = {...selectedUser, checkedOut: "No"}
-        updateSelectedUser(updatedUser)
+        const updatedUser = {...getUser, checkedOut: "No"}
         const newDatabase = [
-            ...databaseCustomers.slice(0, index),
+            ...databaseCustomers.slice(0, selectedUser),
             updatedUser,
-            ...databaseCustomers.slice(index+1)
+            ...databaseCustomers.slice(selectedUser+1)
         ]
         updateDatabase(newDatabase)
         nav("/database")
@@ -59,7 +57,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
             <main>
             <h1>Account Viwer</h1>
 
-            <h2>Now Viewing {(selectedUser === "" || selectedUser.checkedOut != email) ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
+            <h2>Now Viewing {(getUser === "" || getUser.checkedOut != email) ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
 
                 <div className="row">
                     <div className="col">
@@ -79,7 +77,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputDOB">Date of Birth</label>
-                        <input type="date" className="form-control" id="inputDOB" defaultValue={(selectedUser === "") ? "" : new Date(newBirthday).toISOString().split("T")[0]} onChange={(e) => updateBirthday(e.target.value)} required />
+                        <input type="date" className="form-control" id="inputDOB" defaultValue={(getUser === "") ? "" : new Date(newBirthday).toISOString().split("T")[0]} onChange={(e) => updateBirthday(e.target.value)} required />
                     </div>
                 </div>
 
@@ -103,7 +101,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
                 <div className="row">
                     <div className="col">
                         <label htmlFor="lastVisit">Last Visit</label>
-                        <input className="form-control" type="text" id="lastVisit" readOnly value={selectedUser.lastVisit} />
+                        <input className="form-control" type="text" id="lastVisit" readOnly value={getUser.lastVisit} />
                     </div>
                 </div>
 
@@ -123,20 +121,20 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
                         <textarea className="form-control" name="note" id="new-note-form" placeholder="Type new note..."></textarea>
                     </div>
                     <div className="col">
-                        <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Save Note</button>
+                        <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save Note</button>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info" onClick={save} disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Save and Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save and Check In</button>
                         </div>
                     </div>
 
                     <div className="col">
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(selectedUser === "" || selectedUser.checkedOut != email) ? true : false}>Exit and Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Exit and Check In</button>
                         </div>
                     </div>
                 </div>

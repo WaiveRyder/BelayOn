@@ -62,22 +62,21 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
     }, [])
 
     function checkSelection() {
-        const index = databaseCustomers.indexOf(selectedUser)
+        const getUser = selectedUser === "" ? "" : databaseCustomers[selectedUser]
 
-        if(index !== -1 && selectedUser !== "" && (selectedUser.checkedOut === "No" || selectedUser.checkedOut === email)) {
-            const newUser = {...selectedUser, checkedOut: email}
-            updateSelectedUser(newUser)
+        if(getUser.checkedOut === "No" || getUser.checkedOut === email) {
+            const newUser = {...getUser, checkedOut: email}
             const newDatabase = [
-                ...databaseCustomers.slice(0, index),
+                ...databaseCustomers.slice(0, selectedUser),
                 newUser,
-                ...databaseCustomers.slice(index+1)
+                ...databaseCustomers.slice(selectedUser+1)
             ]
             updateDatabase(newDatabase)
             nav("/entrylookup")
-        } else if(selectedUser === "") {
+        } else if(getUser === "") {
             updateUseMsg("Please Select An Account")
         } else {
-            updateUseMsg("This account is already in use by " + selectedUser.checkedOut)
+            updateUseMsg("This account is already in use by " + getUser.checkedOut)
         }
     }
 
@@ -86,7 +85,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
             <h1>Database</h1>
 
             <p>Logged in as: {email}.</p>
-            <p>Selected User: {selectedUser.name}</p>
+            <p>Selected User: {selectedUser === "" ? "" : databaseCustomers[selectedUser].name}</p>
 
             <form id="search" method="get">
                 <input type="search" className="form-control" id="search-box" required placeholder="Name or Email" />
@@ -116,12 +115,12 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
                     {
                         databaseCustomers.map((row, idx) => {
                             return <tr key={idx}>
-                                <td><button className="open-button" onClick={() => updateSelectedUser(row)}>{row.name}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.birthday}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.email}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.type}</button></td>
-                                <td><button className="middle-button" onClick={() => updateSelectedUser(row)}>{row.lastVisit}</button></td>
-                                <td><button className="close-button" onClick={() => updateSelectedUser(row)}>{row.checkedOut}</button></td>
+                                <td><button className="open-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.name}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.birthday}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.email}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.type}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.lastVisit}</button></td>
+                                <td><button className="close-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.checkedOut}</button></td>
                             </tr>
                         })
                     }

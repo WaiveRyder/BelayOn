@@ -3,6 +3,10 @@ import './database.css';
 import { useNavigate } from 'react-router-dom';
 
 export function Database({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
+    const [searchDatabase, updateSearchDatabase] = React.useState(databaseCustomers)
+    const [searchQuery, updateSearchQuery] = React.useState("")
+
+
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
     let [listOfUsers, updateListOfUsers] = React.useState(JSON.parse(localStorage.getItem("listOfUsers")) || ["John H.", "Ellie S.", "Ian M.", "Alan G."])
@@ -80,6 +84,24 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
         }
     }
 
+    function search(event) {
+        event.preventDefault()
+
+        let newDatabase = []
+        if(searchQuery === "") {
+            updateSearchDatabase(databaseCustomers)
+        } else {
+            for (let i = 0; i < databaseCustomers.length; i++) {
+                const customer = databaseCustomers[i]
+                if (customer.name.toLowerCase().includes(searchQuery.toLowerCase()) || customer.email.toLowerCase().includes(searchQuery.toLowerCase())) {
+                    console.log(customer.name)
+                    newDatabase = [...newDatabase, customer]
+                }
+            }
+            updateSearchDatabase(newDatabase)
+        }
+    }
+
   return (
           <main>
             <h1>Database</h1>
@@ -87,9 +109,9 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
             <p>Logged in as: {email}.</p>
             <p>Selected User: {selectedUser === "" ? "" : databaseCustomers[selectedUser].name}</p>
 
-            <form id="search" method="get">
-                <input type="search" className="form-control" id="search-box" required placeholder="Name or Email" />
-                <button type="button" className="btn btn-info" id="search-button">Search🔎</button>
+            <form id="search" onSubmit={search}>
+                <input type="search" className="form-control" id="search-box" onChange={(e) => updateSearchQuery(e.target.value)} placeholder="Name or Email" />
+                <button type="submit" className="btn btn-info" id="search-button" onSubmit={search}>Search🔎</button>
             </form>
 
             <br />
@@ -113,7 +135,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
                 </thead>
                 <tbody>
                     {
-                        databaseCustomers.map((row, idx) => {
+                        searchDatabase.map((row, idx) => {
                             return <tr key={idx}>
                                 <td><button className="open-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.name}</button></td>
                                 <td><button className="middle-button" onClick={() => updateSelectedUser(databaseCustomers.indexOf(row))}>{row.birthday}</button></td>

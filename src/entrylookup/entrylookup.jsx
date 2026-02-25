@@ -105,7 +105,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
                     </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                     <div className="col">
                         Notes:
                         <div className="notes-list">
@@ -123,20 +123,20 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
                     <div className="col">
                         <button type="button" id="submit-new-note" className="btn btn-warning" disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save Note</button>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row">
-                    <div className="col">
+                    
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info" onClick={save} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save and Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save + Check In</button>
                         </div>
-                    </div>
+                    
 
-                    <div className="col">
+                    
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Exit and Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Exit + Check In</button>
                         </div>
-                    </div>
+                    
                 </div>
         </main>
   );

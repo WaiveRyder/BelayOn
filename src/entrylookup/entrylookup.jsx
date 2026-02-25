@@ -61,7 +61,7 @@ export function Entrylookup({databaseCustomers, updateDatabase, selectedUser, up
             <main>
             <h1>Account Viwer</h1>
 
-            <h2>Now Viewing {(selectedUser === "") ? "ERROR: NO CUSTOMER SELECTED" : splitNames}</h2>
+            <h2>Now Viewing {(selectedUser === "") ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
 
                 <div className="row">
                     <div className="col">

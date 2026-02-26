@@ -98,7 +98,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - Users can now sign up and login. Users can add customers to the database/local storage. Users can checkout customer accounts and update their content which is saved to local storage. If an account is checked out it cannot be edited by users.
+- [x] **All functionality implemented or mocked out** - Users can now sign up and login. Users can add customers to the database/local storage. Users can checkout customer accounts and update their content which is saved to local storage. Users can see when others checkout or check in accounts.
 - [x] **Hooks** - Used useState hooks for variables that changed the rendering of the page like the database. I also implemented useEffect for when events needed to happen in time or only once.
 
 ## 🚀 Service deliverable

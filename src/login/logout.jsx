@@ -5,6 +5,7 @@ export function Logout({updateLoggedIn}) {
     const nav = useNavigate()
 
     function logoutUser() {
+        localStorage.removeItem("user")
         updateLoggedIn(false)
         nav("/login")
     }

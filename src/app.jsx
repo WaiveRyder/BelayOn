@@ -11,6 +11,7 @@ import { Createaccount } from './createaccount/createaccount';
 import { About } from './about/about';
 
 export default function App() {
+  const [userDatabase, updateUserDatabase] = React.useState(localStorage.getItem("userDatabase") || []);
   const getCredentials = (localStorage.getItem("user") || "") === "" ? "" : JSON.parse(localStorage.getItem("user"))
 
   const [email, setEmail] = React.useState(getCredentials === "" ? "" : getCredentials.email);
@@ -47,7 +48,7 @@ export default function App() {
 
             <Routes>
               <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
-              <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
+              <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} userDatabase={userDatabase} updateUserDatabase={updateUserDatabase} />} exact />
               <Route path='/database' element={<Database email={email} databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} />} />
               <Route path='/createaccount' element={<Createaccount databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} />} />
               <Route path='/entrylookup' element={<Entrylookup email={email} databaseCustomers={databaseCustomers} updateDatabase={updateDatabase} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />

@@ -7,9 +7,21 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
     const [errorMsg, updateErrorMsg] = React.useState("")
 
     function registerUser() {
-        const getCredentials = JSON.parse(localStorage.getItem("user"))
-        if (getCredentials == null) {
+        let getCredentials = ""
+        const userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || []
+
+        for (let i = 0; i < userDatabase.length; i++) {
+            getCredentials = userDatabase[i]
+            if(getCredentials.email == email) {
+                break
+            } else {
+                getCredentials = ""
+            }
+        }
+
+        if (getCredentials === "") {
             localStorage.setItem("user", JSON.stringify({email: email, password: password}))
+            localStorage.setItem("userDatabase", JSON.stringify([...userDatabase, {email: email, password: password}]))
             updateLoggedIn(true)
             updateErrorMsg("")
             nav("/database")
@@ -19,16 +31,26 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
     }
 
     function loginUser() {
-        const getCredentials = JSON.parse(localStorage.getItem("user"))
+        const userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || []
+        let getCredentials = ""
+        
+        for (let i = 0; i < userDatabase.length; i++) {
+            getCredentials = userDatabase[i]
+            if(getCredentials.email == email) {
+                break
+            }
+        }
 
-        if(getCredentials == null) {
-            updateErrorMsg("ERROR: USERNAME NOT RECOGNIZED")
-        } else if(getCredentials.email === email && getCredentials.password === password) {
+        if(getCredentials !== "" && getCredentials.password === password) {
+            localStorage.setItem("user", JSON.stringify({email: email, password: password}))
             updateLoggedIn(true)
             updateErrorMsg("")
             nav("/database")
-        } else if(getCredentials.email === email){
+            return
+        } else if (getCredentials !== "") {
             updateErrorMsg("ERROR: WRONG PASSWORD")
+        } else {
+            updateErrorMsg("ERROR: USERNAME NOT RECOGNIZED")
         }
     }
 

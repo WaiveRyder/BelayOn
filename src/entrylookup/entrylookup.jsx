@@ -4,7 +4,7 @@ import { data, useNavigate } from 'react-router-dom';
 
 export function Entrylookup({email, databaseCustomers, updateDatabase, selectedUser}) {
     const nav = useNavigate();
-    const getUser = selectedUser === "" ? "" : databaseCustomers[selectedUser]
+    let getUser = (selectedUser === "" ? "" : databaseCustomers[selectedUser])
 
     const splitNames = getUser === "" ? "" : getUser.name.split(" ");
     const [firstName, updateFirstName] = React.useState(splitNames[0])
@@ -17,6 +17,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
 
     function save() {
         const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
+        const fullDatabase = JSON.parse(localStorage.getItem("database"))
 
         if(
             getUser.name != newName ||
@@ -25,15 +26,15 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
             getUser.type != newType 
         ) {
             
-            const updatedUser = {...getUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: "No"}
+            const updatedUser = {...getUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: email}
             
             const newDatabase = [
-                ...databaseCustomers.slice(0, selectedUser),
+                ...fullDatabase.slice(0, selectedUser),
                 updatedUser,
-                ...databaseCustomers.slice(selectedUser+1)
+                ...fullDatabase.slice(selectedUser+1)
             ]
-            updateDatabase(newDatabase)
             localStorage.setItem("database", JSON.stringify(newDatabase))
+            updateDatabase(newDatabase)
             nav("/database")
         } else {
             noSave()
@@ -42,13 +43,14 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
     }
 
     function noSave() {
+        const fullDatabase = JSON.parse(localStorage.getItem("database"))
         const updatedUser = {...getUser, checkedOut: "No"}
         const newDatabase = [
-            ...databaseCustomers.slice(0, selectedUser),
+            ...fullDatabase.slice(0, selectedUser),
             updatedUser,
-            ...databaseCustomers.slice(selectedUser+1)
+            ...fullDatabase.slice(selectedUser+1)
         ]
-        updateDatabase(newDatabase)
+        localStorage.setItem("database", JSON.stringify(newDatabase))
         nav("/database")
     }
 

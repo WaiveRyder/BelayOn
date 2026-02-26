@@ -38,6 +38,8 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
             getCredentials = userDatabase[i]
             if(getCredentials.email == email) {
                 break
+            } else {
+                getCredentials = ""
             }
         }
 

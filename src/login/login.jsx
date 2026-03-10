@@ -7,11 +7,18 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
     const [errorMsg, updateErrorMsg] = React.useState("")
 
     async function registerUser() {
-        const response = await fetch("/api/register", {
+        const response = await fetch(`/api/register`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: { email: email, password: password }
+            body: JSON.stringify({ email, password })
         });
+
+        let responseBody = {};
+        try {
+            responseBody = await response.json();
+        } catch {
+            responseBody = {};
+        }
 
         if (response.status === 200) {
             localStorage.setItem("user", JSON.stringify({email: email}))
@@ -19,9 +26,9 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
             updateErrorMsg("")
             nav("/database")
         } else if (response.status === 400) {
-            updateErrorMsg(JSON.stringify(response.body.msg));
+            updateErrorMsg(responseBody.msg);
         } else if (response.status === 409) {
-            updateErrorMsg(JSON.stringify(response.body.msg));
+            updateErrorMsg(responseBody.msg);
         } else {
             updateErrorMsg("Error: unexpected error occured");
         }

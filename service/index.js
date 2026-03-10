@@ -13,15 +13,15 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 var apiRouter = express.Router();
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
 
-apiRouter.post('/register', async (req, res) => {
+apiRouter.post("/register", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     if (email === null || password === null) {
-        res.status(400).send({ msg: 'Erorr: no null fields allowed'});
+        res.status(400).send({ msg: "Error: no null fields allowed"});
     } else if (users.find(user => user.email === email)) {
-        res.status(409).send({ msg: 'Error: email already in use'});
+        res.status(409).send({ msg: "Error: email already in use"});
     } else {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = { email: email, password: hashedPassword, authToken: uuid.v4()}

@@ -7,7 +7,7 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
     const [errorMsg, updateErrorMsg] = React.useState("")
 
     async function registerUser() {
-        const response = await fetch(`/api/register`, {
+        const response = await fetch("/api/register", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ email, password })
@@ -22,19 +22,38 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
 
         if (response.status === 200) {
             localStorage.setItem("user", JSON.stringify({email: email}))
-            updateLoggedIn(true)
-            updateErrorMsg("")
-            nav("/database")
-        } else if (response.status === 400) {
-            updateErrorMsg(responseBody.msg);
-        } else if (response.status === 409) {
+            updateLoggedIn(true);
+            updateErrorMsg("");
+            nav("/database");
+        } else if (response.status === 400 || response.status === 409) {
             updateErrorMsg(responseBody.msg);
         } else {
             updateErrorMsg("Error: unexpected error occured");
         }
     }
 
-    function loginUser() {
+    async function loginUser() {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email, password})
+        });
+
+        let responseBody = await response.json();
+
+        if (response.status === 200) {
+            localStorage.setItem("user", JSON.stringify({email: email}));
+            updateLoggedIn(true);
+            updateErrorMsg("");
+            nav("/database");
+        } else if (response.status === 401 || response.status === 400) {
+            updateErrorMsg(responseBody.msg);
+        } else {
+            updateErrorMsg("Error: unexpected error occured")
+        }
+
+
+
         const userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || []
         let getCredentials = ""
         

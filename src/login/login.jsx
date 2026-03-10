@@ -6,27 +6,24 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
 
     const [errorMsg, updateErrorMsg] = React.useState("")
 
-    function registerUser() {
-        let getCredentials = ""
-        const userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || []
+    async function registerUser() {
+        const response = await fetch("/api/register", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: { email: email, password: password }
+        });
 
-        for (let i = 0; i < userDatabase.length; i++) {
-            getCredentials = userDatabase[i]
-            if(getCredentials.email == email) {
-                break
-            } else {
-                getCredentials = ""
-            }
-        }
-
-        if (getCredentials === "") {
-            localStorage.setItem("user", JSON.stringify({email: email, password: password}))
-            localStorage.setItem("userDatabase", JSON.stringify([...userDatabase, {email: email, password: password}]))
+        if (response.status === 200) {
+            localStorage.setItem("user", JSON.stringify({email: email}))
             updateLoggedIn(true)
             updateErrorMsg("")
             nav("/database")
-        } else if(getCredentials.email === email) {
-            updateErrorMsg("ERROR: USERNAME IS ALREADY TAKEN")
+        } else if (response.status === 400) {
+            updateErrorMsg(JSON.stringify(response.body.msg));
+        } else if (response.status === 409) {
+            updateErrorMsg(JSON.stringify(response.body.msg));
+        } else {
+            updateErrorMsg("Error: unexpected error occured");
         }
     }
 

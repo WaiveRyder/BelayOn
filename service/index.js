@@ -31,3 +31,8 @@ apiRouter.post('/register', async (req, res) => {
         res.status(200).send({ email: user.email });
     }
 });
+
+const port = 3000;
+app.listen(port, function() {
+    console.log(`Server is running on port ${port}`);
+});

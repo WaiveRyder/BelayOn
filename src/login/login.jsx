@@ -39,7 +39,13 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
             body: JSON.stringify({email, password})
         });
 
-        let responseBody = await response.json();
+
+        let responseBody = {};
+        try {
+            responseBody = await response.json();
+        } catch {
+            responseBody = {};
+        }
 
         if (response.status === 200) {
             localStorage.setItem("user", JSON.stringify({email: email}));
@@ -50,32 +56,6 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
             updateErrorMsg(responseBody.msg);
         } else {
             updateErrorMsg("Error: unexpected error occured")
-        }
-
-
-
-        const userDatabase = JSON.parse(localStorage.getItem("userDatabase")) || []
-        let getCredentials = ""
-        
-        for (let i = 0; i < userDatabase.length; i++) {
-            getCredentials = userDatabase[i]
-            if(getCredentials.email == email) {
-                break
-            } else {
-                getCredentials = ""
-            }
-        }
-
-        if(getCredentials !== "" && getCredentials.password === password) {
-            localStorage.setItem("user", JSON.stringify({email: email, password: password}))
-            updateLoggedIn(true)
-            updateErrorMsg("")
-            nav("/database")
-            return
-        } else if (getCredentials !== "") {
-            updateErrorMsg("ERROR: WRONG PASSWORD")
-        } else {
-            updateErrorMsg("ERROR: USERNAME NOT RECOGNIZED")
         }
     }
 

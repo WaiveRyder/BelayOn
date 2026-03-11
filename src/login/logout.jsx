@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 export function Logout({updateLoggedIn}) {
     const nav = useNavigate()
 
-    function logoutUser() {
+    async function logoutUser() {
+        const response = await fetch("/api/logout", {method: "DELETE"});
         localStorage.removeItem("user")
         updateLoggedIn(false)
         nav("/login")

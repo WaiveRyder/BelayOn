@@ -11,24 +11,33 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
     const [birthday, setBirthday] = React.useState("");
     const [email, setEmail] = React.useState("");
 
+    const [errorMsg, setErrorMsg] = React.useState("");
+
     async function addAccount() {
         const fullName = (middleName === "") ? (firstName + " " + lastName) : (firstName + " " + middleName + " " + lastName)
         const newRow = {name: fullName, birthday: new Date(birthday).toLocaleDateString(), email: email, type: "Guest", lastVisit: new Date().toLocaleDateString(), checkedOut: "No", uuid: crypto.randomUUID()}
         const newData = [...databaseCustomers, newRow]
         updateDatabase(newData)
         
-        const reponse = await fetch("/api/create", {
+        const response = await fetch("/api/create", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(newRow)
-        })
+        });
 
-        setFirstName("");
-        setMiddleName("");
-        setLastName("");
-        setBirthday("");
-        setEmail("");
-        nav("/database")
+        if (response.status === 200) {
+            setFirstName("");
+            setMiddleName("");
+            setLastName("");
+            setBirthday("");
+            setEmail("");
+            setErrorMsg("");
+            nav("/database")
+        } else {
+            setErrorMsg("Error: authorization not valid")
+        }
+
+        
     }
 
     return (
@@ -71,6 +80,8 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
                         <button className="btn btn-danger" disabled={!firstName || !lastName || !birthday || !email} onClick={addAccount}>Create New Account</button>
                     </div>
                 </div>
+
+                <p style={{color: "red"}}><b>{errorMsg}</b></p>
         </main>
   );
 }

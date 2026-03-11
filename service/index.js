@@ -51,7 +51,7 @@ apiRouter.post("/login", async (req, res) => {
 
 apiRouter.delete("/logout", async (req, res) => {
     const authToken = req.cookies.authToken;
-    let user = authenticate(authToken);
+    let user = users.find(user => user.authToken === authToken);
     if (user) {
         delete user.authToken;
         res.clearCookie("authToken");
@@ -61,27 +61,30 @@ apiRouter.delete("/logout", async (req, res) => {
     }
 });
 
-apiRouter.post("/create", async (req, res) => {
-    const authToken = req.cookies.authToken;
-    if(!authenticate(authToken)) {
-        res.status(401).send({msg: "Error: authorization not valid"})
-    } else {
-        const name = req.body.name;
-        const birthday = req.body.birthday;
-        const email = req.body.email;
-        const type = req.body.type;
-        const lastVisit = req.body.lastVisit;
-        const checkedOut = req.body.checkedOut;
-        const uuid = req.body.uuid;
+apiRouter.post("/create", authenticate, async (req, res) => {
+    const name = req.body.name;
+    const birthday = req.body.birthday;
+    const email = req.body.email;
+    const type = req.body.type;
+    const lastVisit = req.body.lastVisit;
+    const checkedOut = req.body.checkedOut;
+    const uuid = req.body.uuid;
 
-        let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
-        database.push(user)
-        res.status(200).send();
-    }
+    let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
+    database.push(user)
+    res.status(200).send();
 });
 
-function authenticate(authToken) {
-    return users.find(user => user.authToken === authToken);
+apiRouter.get("/database", authenticate, async (req, res) => {
+    res.send(users); 
+});
+
+function authenticate(req, res, next) {
+    if (!users.find(user => user.authToken === authToken)) {
+        res.status(401).send({msg: "Error: authentication not valid"})
+    } else {
+        next();
+    }
 }
 
 const port = 3000;

@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const users = [];
 
-const customers = [];
+const database = [];
 
 app.use(express.json());
 app.use(cookieParser());
@@ -24,7 +24,7 @@ apiRouter.post("/register", async (req, res) => {
         res.status(409).send({msg: "Error: email already in use"});
     } else {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = { email: email, password: hashedPassword, authToken: uuid.v4()}
+        const user = {email: email, password: hashedPassword, authToken: uuid.v4()}
         users.push(user);
 
         res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 60*60*24});
@@ -51,8 +51,8 @@ apiRouter.post("/login", async (req, res) => {
 
 apiRouter.delete("/logout", async (req, res) => {
     const authToken = req.cookies.authToken;
-    let user = users.find(user => user.authToken === authToken);
-    if (user !== undefined) {
+    let user = authenticate(authToken);
+    if (user) {
         delete user.authToken;
         res.clearCookie("authToken");
         res.status(200).send();
@@ -60,6 +60,29 @@ apiRouter.delete("/logout", async (req, res) => {
         res.status(401).send({msg: "Error: authorization no longer valid"})
     }
 });
+
+apiRouter.post("/create", async (req, res) => {
+    const authToken = req.cookies.authToken;
+    if(!authenticate(authToken)) {
+        res.status(401).send({msg: "Error: authorization not valid"})
+    } else {
+        const name = req.body.name;
+        const birthday = req.body.birthday;
+        const email = req.body.email;
+        const type = req.body.type;
+        const lastVisit = req.body.lastVisit;
+        const checkedOut = req.body.checkedOut;
+        const uuid = req.body.uuid;
+
+        let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
+        database.push(user)
+        res.status(200)
+    }
+});
+
+function authenticate(authToken) {
+    return users.find(user => user.authToken === authToken);
+}
 
 const port = 3000;
 app.listen(port, function() {

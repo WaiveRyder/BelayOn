@@ -11,12 +11,17 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
     const [birthday, setBirthday] = React.useState("");
     const [email, setEmail] = React.useState("");
 
-    function addAccount() {
+    async function addAccount() {
         const fullName = (middleName === "") ? (firstName + " " + lastName) : (firstName + " " + middleName + " " + lastName)
         const newRow = {name: fullName, birthday: new Date(birthday).toLocaleDateString(), email: email, type: "Guest", lastVisit: new Date().toLocaleDateString(), checkedOut: "No", uuid: crypto.randomUUID()}
         const newData = [...databaseCustomers, newRow]
         updateDatabase(newData)
-        localStorage.setItem("database", JSON.stringify(newData))
+        
+        const reponse = await fetch("/api/create", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newRow)
+        })
 
         setFirstName("");
         setMiddleName("");

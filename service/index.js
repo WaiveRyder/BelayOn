@@ -54,6 +54,7 @@ apiRouter.delete("/logout", async (req, res) => {
     let user = users.find(user => user.authToken === authToken);
     if (user !== undefined) {
         delete user.authToken;
+        res.clearCookie("authToken");
         res.status(200).send();
     } else {
         res.status(401).send({msg: "Error: authorization no longer valid"})

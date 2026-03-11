@@ -76,7 +76,7 @@ apiRouter.post("/create", async (req, res) => {
 
         let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
         database.push(user)
-        res.status(200)
+        res.status(200).send();
     }
 });
 

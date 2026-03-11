@@ -49,6 +49,17 @@ apiRouter.post("/login", async (req, res) => {
     }
 });
 
+apiRouter.delete("/logout", async (req, res) => {
+    const authToken = req.cookies.authToken;
+    let user = users.find(user => user.authToken === authToken);
+    if (user !== undefined) {
+        delete user.authToken;
+        res.status(200).send();
+    } else {
+        res.status(401).send({msg: "Error: authorization no longer valid"})
+    }
+});
+
 const port = 3000;
 app.listen(port, function() {
     console.log(`Server is running on port ${port}`);

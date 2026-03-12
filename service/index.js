@@ -122,6 +122,23 @@ apiRouter.put("/reserve", authenticate, async (req, res) => {
     }
 })
 
+apiRouter.put("/checkin", authenticate, async (req, res) => {
+    const uuid = req.body.uuid;
+    const email = users.find(user => user.authToken === req.cookies.authToken).email;
+    const account = database.find(account => account.uuid === uuid);
+
+    if (account) {
+        if (account.checkedOut[1] === email) {
+            account.checkedOut = ["No"];
+            res.send();
+        } else {
+            res.status(402).send({msg: "Error: account is checked out by " + account.checkedOut[1]})
+        }
+    } else {
+        res.status(404).send({msg: "Error: account not found"})
+    }
+})
+
 function authenticate(req, res, next) {
     const authToken = req.cookies.authToken;
     if (!users.find(user => user.authToken === authToken)) {

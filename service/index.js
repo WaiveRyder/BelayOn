@@ -97,6 +97,28 @@ apiRouter.get("/account", authenticate, async (req, res) => {
     }
 });
 
+apiRouter.put("/reserve", authenticate, async (req, res) => {
+    const uuid = req.body.uuid;
+    const account = database.find(account => account.uuid === uuid);
+    
+    if (account) {
+        if (account.checkedOut.length === 1) {
+            account.checkedOut.push(req.body.email);
+
+            const accountCheck = database.find(account => account.uuid === uuid);
+            if (accountCheck.checkedOut[1] === req.body.email) {
+                res.status(200).send(accountCheck);
+            } else {
+                res.status(408).send({msg: "Error: account already reserved by " + accountCheck.checkedOut[1]})
+            }
+        } else {
+            res.status(408).send({msg: "Error: account already reserved by " + account.checkedOut[1]})
+        }
+    } else {
+        res.status(404).send({msg: "Error: account not found"})
+    }
+})
+
 function authenticate(req, res, next) {
     const authToken = req.cookies.authToken;
     if (!users.find(user => user.authToken === authToken)) {

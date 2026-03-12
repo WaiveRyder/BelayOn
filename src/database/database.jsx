@@ -48,6 +48,24 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         getDatabase(updateUseMsg).then(updateDatabase)
     }, [])
 
+    async function reserveAccount() {
+    const response = await fetch("/api/reserve", {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({uuid: selectedUser})
+    });
+
+    if (response.status === 200) {
+        nav("/entrylookup")
+    } else if (response.status === 401) {
+        updateUseMsg("Error: authorization is not valid");
+    } else if (response.status === 408) {
+        promise = await response.json();
+        promise.then(updateEditsMSG);
+    } else {
+        updateUseMsg("Error: failed to reserve account, status " + response.status);
+    }
+
     /*useEffect(() => {
         const intervalID = setInterval(() => {
             let tempDatabase = JSON.parse(localStorage.getItem("database")) || databaseCustomers
@@ -203,24 +221,6 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         localStorage.setItem("query", JSON.stringify(searchQuery))
         search()
     } */}
-
-    async function reserveAccount() {
-    const response = await fetch("/api/reserve", {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({uuid: selectedUser})
-    });
-
-    if (response.status === 200) {
-        nav("/entrylookup")
-    } else if (response.status === 401) {
-        updateUseMsg("Error: authorization is not valid");
-    } else if (response.status === 408) {
-        promise = await response.json();
-        promise.then(updateEditsMSG);
-    } else {
-        updateUseMsg("Error: failed to reserve account, status " + response.status);
-    }
 }
 
   return (

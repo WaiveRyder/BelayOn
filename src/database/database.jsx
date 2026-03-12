@@ -16,6 +16,18 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
+        getDatabase().then((res) => {
+            res.forEach(customer => {
+                if (customer.checkedOut[1] === email) {
+                    const response = fetch("/api/checkin", {
+                        method: "PUT",
+                        headers: {"Content-Type": "application/json"},
+                        body: {uuid: customer.uuid}
+                    })
+                }
+            });
+        })
+
         getDatabase().then(updateDatabase)
     }, [])
 
@@ -115,42 +127,6 @@ export function Database({email, selectedUser, updateSelectedUser}) {
 
         return () => {clearInterval(intervalID)}
     })*/
-
-    useEffect(() => {
-        updateSelectedUser("")
-        getDatabase().then(updateDatabase)
-    }, [])
-
-    /*function checkSelection() {
-        
-        const getUser = (selectedUser === "") ? "" : databaseCustomers.find(customer => customer.uuid === selectedUser)
-
-        if(getUser === "") {
-            updateUseMsg("Please Select An Account")
-        } else if(getUser.checkedOut === "No") {
-            const newUser = {...getUser, checkedOut: email}
-            const newDatabase = [
-                ...databaseCustomers.slice(0, databaseCustomers.indexOf(getUser)),
-                newUser,
-                ...databaseCustomers.slice(databaseCustomers.indexOf(getUser)+1)
-            ]
-            updateDatabase(newDatabase)
-
-            if(editsMsg.length < 10) {
-                    const newMsg = [{msg: `${email} checked out ${getUser.name}`}].concat(editsMsg)
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                } else {
-                    const newMsg = [{msg: `${email} checked out ${getUser.name}`}].concat(editsMsg.slice(0, -1))
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                }
-
-            nav("/entrylookup")
-        } else {
-            updateUseMsg("This account is already in use by " + getUser.checkedOut)
-        }
-    }*/
 
     function findRow(row) {
         for (let i = 0; i < databaseCustomers.length; i++) {

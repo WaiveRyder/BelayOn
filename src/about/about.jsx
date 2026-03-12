@@ -2,29 +2,18 @@ import React, { useEffect } from 'react';
 import './about.css';
 
 export function About() {
-    const [source, updateSource] = React.useState(null);
+    const [advice, updateAdvice] = React.useState("Loading...")
 
     async function getQuote() {
-        //Replaced by API call later
-        return {
-            quote: "\"If you want to make the world a better place, take a look at yourself and make a change. Hooo\"",
-            author: "-Lego Batman"
-        }
-    }
-
-    const channelIDs = "UCMuDqExNJkCJpOHsX4VKY9g";
-
-    async function getVideo() {
-        const response = await fetch("/api/youtube");
-
+        const response = await fetch("https://api.adviceslip.com/advice")
         if (response.status === 200) {
-            const data = await response.json();
-            updateSource(data.videoUrl);
+            const responseBody = await response.json();
+            updateAdvice(responseBody.slip.advice);
         }
     }
 
     useEffect(() => {
-        getVideo();
+        getQuote();
     }, []);
 
   return (
@@ -80,14 +69,12 @@ export function About() {
                     <h2 className="accordion-header" id="headingFour">
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                                 data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            Quote of the Day
+                            Random Quote
                         </button>
                     </h2>
                     <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#about-accordion">
                         <div className="accordion-body">
-                            <div className="ratio ratio-1x1">
-                                <iframe width="560" height="315" src={source} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-                            </div>
+                            <p>{advice}</p>
                         </div>
                     </div>
                 </div>

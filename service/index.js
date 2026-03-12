@@ -15,37 +15,12 @@ const database = [
     {name: "Loki Laufeyson", birthday: "12/17/965", email: "godofmischeif@hotmail.com", type: "Guest", lastVisit: "2/25/2026", checkedOut: ["No"], uuid: "95290908-8fb5-43cd-9f0e-4ba3dc8e0b94"},
         ];
 
-const channelIDs = ["UCMuDqExNJkCJpOHsX4VKY9g", "UCjq6e7k_pkOkrBD2Qieqxnw", "UC_gSotrFVZ_PiAxo3fTQVuQ", "UC8eNyF9eYwgr_K-Nl4gSHWw", "UCgfCbSVApOqM8D45gi_K1zw", "UCqlhArHNFF556mfbmbw6Y3A", "UC9JoqmFQnLjVmgqE_7uqMyA", "UCnbbOxqwPK2lfkEP3FzIf2Q", "UCQvq-0fss4lNrmIz7gcPLtQ"];
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
 var apiRouter = express.Router();
 app.use("/api", apiRouter);
-
-apiRouter.get("/youtube", async (req, res) => {
-    try {
-        const response = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelIDs[Math.floor(Math.random() * channelIDs.length)]}`);
-
-        if (!response.ok) {
-            return res.status(502).send({msg: "Error: failed to fetch YouTube feed"});
-        }
-
-        const xml = await response.text();
-        const entryMatch = xml.match(/<entry>[\s\S]*?<yt:videoId>([^<]+)<\/yt:videoId>/);
-
-        if (!entryMatch || !entryMatch[1]) {
-            return res.status(404).send({msg: "Error: no videos found for channel"});
-        }
-
-        const videoId = entryMatch[1].trim();
-        const videoUrl = `https://www.youtube.com/embed/${videoId}`;
-        return res.send({videoUrl});
-    } catch (err) {
-        return res.status(500).send({msg: "Error: unable to retrieve latest video"});
-    }
-});
 
 apiRouter.post("/register", async (req, res) => {
     const email = req.body.email;

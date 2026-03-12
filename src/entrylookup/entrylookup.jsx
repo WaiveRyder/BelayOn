@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './entrylookup.css'
 import { data, useNavigate } from 'react-router-dom';
 
-export function Entrylookup({email, selectedUser}) {
+export function Entrylookup({selectedUser}) {
     const nav = useNavigate();
 
     const [firstName, updateFirstName] = React.useState("")

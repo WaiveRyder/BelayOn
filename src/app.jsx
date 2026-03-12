@@ -12,10 +12,8 @@ import { About } from './about/about';
 import { getDatabase } from './database/database';
 
 export default function App() {
-  const getCredentials = (localStorage.getItem("user") || "") === "" ? "" : JSON.parse(localStorage.getItem("user"))
-
-  const [email, setEmail] = React.useState(getCredentials === "" ? "" : getCredentials.email);
-  const [password, setPassword] = React.useState(getCredentials === "" ? "" : getCredentials.password);
+  const [email, setEmail] = React.useState(localStorage.getItem("user") || "");
+  const [password, setPassword] = React.useState("");
   const [loggedIn, updateLoggedIn] = React.useState((localStorage.getItem("user") || "") !== "");
 
   const [selectedUser, updateSelectedUser] = React.useState("")

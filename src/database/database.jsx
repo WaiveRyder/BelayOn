@@ -18,7 +18,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     useEffect(() => {
         getDatabase().then((res) => {
             res.forEach(customer => {
-                if (customer.checkedOut[1] === email) {
+                if (customer.checkedOut.length > 1 && customer.checkedOut[1] === email) {
                     const response = fetch("/api/checkin", {
                         method: "PUT",
                         headers: {"Content-Type": "application/json"},

@@ -18,7 +18,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
 
     useEffect(() => {
         if (selectedUser !== "") {
-            user = getAccount()
+            let user = getAccount()
             user.then((res) => {
                 if (res) {
                     splitNames = res.name.split(" ");

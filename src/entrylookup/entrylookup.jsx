@@ -21,7 +21,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
             let user = getAccount()
             user.then((res) => {
                 if (res) {
-                    splitNames = res.name.split(" ");
+                    const splitNames = res.name.split(" ");
                     updateFirstName(splitNames[0])
                     updateMiddleName(splitNames.length === 3 ? splitNames[1] : "")
                     updateLastName(splitNames.length === 3 ? splitNames[2] : splitNames[1])

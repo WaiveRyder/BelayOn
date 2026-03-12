@@ -48,6 +48,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
                 birthday: birthday,
                 email: email,
                 type: type,
+                lastVisit: lastVisit,
                 uuid: selectedUser
             })
         });

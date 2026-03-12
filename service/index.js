@@ -112,6 +112,8 @@ apiRouter.put("/reserve", authenticate, async (req, res) => {
             } else {
                 res.status(408).send({msg: "Error: account already reserved by " + accountCheck.checkedOut[1]})
             }
+        } else if (account.checkedOut[1] === email) {
+            res.send();
         } else {
             res.status(408).send({msg: "Error: account already reserved by " + account.checkedOut[1]})
         }

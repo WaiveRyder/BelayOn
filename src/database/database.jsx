@@ -139,7 +139,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         }
     }, [])
 
-    function checkSelection() {
+    /*function checkSelection() {
         
         const getUser = (selectedUser === "") ? "" : databaseCustomers.find(customer => customer.uuid === selectedUser)
 
@@ -168,7 +168,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         } else {
             updateUseMsg("This account is already in use by " + getUser.checkedOut)
         }
-    }
+    }*/
 
     function findRow(row) {
         for (let i = 0; i < databaseCustomers.length; i++) {
@@ -203,6 +203,24 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         localStorage.setItem("query", JSON.stringify(searchQuery))
         search()
     } */}
+
+    async function reserveAccount() {
+    const response = await fetch("/api/reserve", {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({uuid: uuid})
+    });
+
+    if (response.status === 200) {
+        nav("/entrylookup")
+    } else if (response.status === 401) {
+        updateUseMsg("Error: authorization is not valid");
+    } else if (response.status === 408) {
+        return await response.json();
+    } else {
+        updateUseMsg("Error: failed to reserve account, status " + response.status);
+    }
+}
 
   return (
           <main>
@@ -261,7 +279,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
                 </tbody>
             </table>
 
-            <button className="btn btn-danger" onClick={checkSelection}>Check Out Selected Account</button>
+            <button className="btn btn-danger" onClick={reserveAccount}>Check Out Selected Account</button>
             <p style={{color: "red"}}><b>{inUseMsg}</b></p>
 
             {

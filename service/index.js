@@ -108,7 +108,7 @@ apiRouter.put("/reserve", authenticate, async (req, res) => {
 
             const accountCheck = database.find(account => account.uuid === uuid);
             if (accountCheck.checkedOut[1] === email) {
-                res.status(200).send(accountCheck);
+                res.status(200);
             } else {
                 res.status(408).send({msg: "Error: account already reserved by " + accountCheck.checkedOut[1]})
             }

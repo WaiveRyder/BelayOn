@@ -47,7 +47,8 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
                 name: (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName,
                 birthday: birthday,
                 email: email,
-                type: type
+                type: type,
+                uuid: selectedUser
             })
         });
 

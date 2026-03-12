@@ -49,21 +49,22 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     }, [])
 
     async function reserveAccount() {
-    const response = await fetch("/api/reserve", {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({uuid: selectedUser})
-    });
+        const response = await fetch("/api/reserve", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({uuid: selectedUser})
+        });
 
-    if (response.status === 200) {
-        nav("/entrylookup")
-    } else if (response.status === 401) {
-        updateUseMsg("Error: authorization is not valid");
-    } else if (response.status === 408) {
-        promise = await response.json();
-        promise.then(updateEditsMSG);
-    } else {
-        updateUseMsg("Error: failed to reserve account, status " + response.status);
+        if (response.status === 200) {
+            //nav("/entrylookup")
+        } else if (response.status === 401) {
+            updateUseMsg("Error: authorization is not valid");
+        } else if (response.status === 408) {
+            promise = await response.json();
+            promise.then(updateEditsMSG);
+        } else {
+            updateUseMsg("Error: failed to reserve account, status " + response.status);
+        }
     }
 
     /*useEffect(() => {
@@ -196,32 +197,6 @@ export function Database({email, selectedUser, updateSelectedUser}) {
             }
         }
     }
-
-    {/*function search() {
-        let updatedDatabase = JSON.parse(localStorage.getItem("database")) || databaseCustomers
-        const getQuery = localStorage.getItem("query")
-        let query = getQuery ? JSON.parse(getQuery) : ""
-
-        if(query !== "") {
-            let newDatabase = []
-            for (let i = 0; i < updatedDatabase.length; i++) {
-                const customer = updatedDatabase[i]
-                if (customer.name.toLowerCase().includes(query.toLowerCase()) || customer.email.toLowerCase().includes(query.toLowerCase())) {
-                    newDatabase = [...newDatabase, customer]
-                }
-            }
-            updateDatabase(newDatabase)
-        } else {
-            updateDatabase(updatedDatabase)
-        }
-    }
-
-    function searchSubmit(e) {
-        e.preventDefault()
-        localStorage.setItem("query", JSON.stringify(searchQuery))
-        search()
-    } */}
-}
 
   return (
           <main>

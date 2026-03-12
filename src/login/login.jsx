@@ -21,7 +21,7 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
         }
 
         if (response.status === 200) {
-            localStorage.setItem("user", JSON.stringify({email: email}))
+            localStorage.setItem("user", email)
             updateLoggedIn(true);
             updateErrorMsg("");
             nav("/database");
@@ -48,7 +48,7 @@ export function Login({email, password, setEmail, setPassword, updateLoggedIn}) 
         }
 
         if (response.status === 200) {
-            localStorage.setItem("user", JSON.stringify({email: email}));
+            localStorage.setItem("user", email);
             updateLoggedIn(true);
             updateErrorMsg("");
             nav("/database");

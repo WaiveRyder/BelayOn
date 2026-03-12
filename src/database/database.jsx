@@ -123,14 +123,14 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     }, [])
 
     function checkSelection() {
-        const getUser = (selectedUser === "") ? "" : databaseCustomers[selectedUser]
+        const getUser = (selectedUser === "") ? "" : databaseCustomers.find(customer => customer.uuid === selectedUser)
 
         if(getUser === "") {
             updateUseMsg("Please Select An Account")
         } else if(getUser.checkedOut === "No") {
             const newUser = {...getUser, checkedOut: email}
             const newDatabase = [
-                ...databaseCustomers.slice(0, selectedUser),
+                ...databaseCustomers.slice(0, databaseCustomers.indexOf(getUser)),
                 newUser,
                 ...databaseCustomers.slice(selectedUser+1)
             ]
@@ -155,7 +155,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     function findRow(row) {
         for (let i = 0; i < databaseCustomers.length; i++) {
             if(databaseCustomers[i].uuid === row.uuid) {
-                updateSelectedUser(i)
+                updateSelectedUser(row.uuid)
                 return
             }
         }
@@ -191,7 +191,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
             <h1>Database</h1>
 
             <p>Logged in as: {email}.</p>
-            <p>Selected User: {selectedUser === "" ? "" : databaseCustomers[selectedUser].name}</p>
+            <p>Selected User: {selectedUser === "" ? "" : databaseCustomers.find(customer => customer.uuid === selectedUser)?.name}</p>
 
             {/*
             <form id="search" onSubmit={(e) => searchSubmit(e)}>

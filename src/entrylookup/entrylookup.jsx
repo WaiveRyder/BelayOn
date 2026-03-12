@@ -40,7 +40,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
     }, [])
 
     async function save() {
-        const response = fetch("/api/save", {
+        const response = await fetch("/api/save", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

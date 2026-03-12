@@ -9,7 +9,6 @@ import { Database } from './database/database';
 import { Entrylookup } from './entrylookup/entrylookup';
 import { Createaccount } from './createaccount/createaccount';
 import { About } from './about/about';
-import { getDatabase } from './database/database';
 
 export default function App() {
   const [email, setEmail] = React.useState(localStorage.getItem("user") || "");

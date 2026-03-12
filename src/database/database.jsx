@@ -43,7 +43,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         } else if (response.status === 401) {
             updateUseMsg("Error: authorization is not valid");
         } else if (response.status === 408) {
-            promise = await response.json();
+            const promise = await response.json();
             promise.then(updateEditsMSG);
         } else {
             updateUseMsg("Error: failed to reserve account, status " + response.status);

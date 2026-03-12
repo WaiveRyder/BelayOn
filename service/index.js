@@ -49,7 +49,7 @@ apiRouter.post("/login", async (req, res) => {
         res.status(400).send({msg: "Error: no null fields allowed"});
     } else if (user !== undefined && user.email === email && await bcrypt.compare(password, user.password)) {
         user.authToken = uuid.v4();
-        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 60*60*24})
+        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24})
         res.status(200).send();
     } else {
         res.status(401).send({msg: "Error: username or password is incorrect"});

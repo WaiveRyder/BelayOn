@@ -86,6 +86,17 @@ apiRouter.get("/database", authenticate, async (req, res) => {
     res.send(database); 
 });
 
+apiRouter.get("/account", authenticate, async (req, res) => {
+    const uuid = req.body.uuid;
+    const account = database.find(account => account.uuid === uuid);
+
+    if (account) {
+        res.send(account)
+    } else {
+        res.status(404).send({msg: "Error: account not found"})
+    }
+});
+
 function authenticate(req, res, next) {
     const authToken = req.cookies.authToken;
     if (!users.find(user => user.authToken === authToken)) {

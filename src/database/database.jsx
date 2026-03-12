@@ -16,6 +16,7 @@ export async function getDatabase(updateUseMsg) {
     }
 }
 
+
 export function Database({email, selectedUser, updateSelectedUser}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
 
@@ -123,6 +124,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     }, [])
 
     function checkSelection() {
+        
         const getUser = (selectedUser === "") ? "" : databaseCustomers.find(customer => customer.uuid === selectedUser)
 
         if(getUser === "") {
@@ -132,7 +134,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
             const newDatabase = [
                 ...databaseCustomers.slice(0, databaseCustomers.indexOf(getUser)),
                 newUser,
-                ...databaseCustomers.slice(selectedUser+1)
+                ...databaseCustomers.slice(databaseCustomers.indexOf(getUser)+1)
             ]
             updateDatabase(newDatabase)
 

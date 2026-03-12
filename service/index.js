@@ -34,7 +34,7 @@ apiRouter.post("/register", async (req, res) => {
         const user = {email: email, password: hashedPassword, authToken: uuid.v4()}
         users.push(user);
 
-        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 60*60*24});
+        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24});
         res.status(200).send({email: user.email});
     }
 });

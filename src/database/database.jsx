@@ -16,19 +16,18 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
-        getDatabase().then((res) => {
-            res.forEach(customer => {
-                if (customer.checkedOut.length > 1 && customer.checkedOut[1] === email) {
-                    const response = fetch("/api/checkin", {
+        async function checkIn() {
+            if (selectedUser !== "") {
+            const response = await fetch("/api/checkin", {
                         method: "PUT",
                         headers: {"Content-Type": "application/json"},
-                        body: JSON.stringify({uuid: customer.uuid})
+                        body: JSON.stringify({uuid: selectedUser})
                     })
-                }
-            });
-        })
-
-        getDatabase().then(updateDatabase)
+            }
+            updateSelectedUser("")
+            getDatabase().then(updateDatabase)
+        }
+        checkIn()
     }, [])
 
     async function reserveAccount() {

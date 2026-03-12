@@ -208,7 +208,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const response = await fetch("/api/reserve", {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({uuid: uuid})
+        body: JSON.stringify({uuid: selectedUser})
     });
 
     if (response.status === 200) {

@@ -15,7 +15,7 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
 
     async function addAccount() {
         const fullName = (middleName === "") ? (firstName + " " + lastName) : (firstName + " " + middleName + " " + lastName)
-        const newRow = {name: fullName, birthday: new Date(birthday).toLocaleDateString(), email: email, type: "Guest", lastVisit: new Date().toLocaleDateString(), checkedOut: "No", uuid: crypto.randomUUID()}
+        const newRow = {name: fullName, birthday: new Date(birthday).toLocaleDateString(), email: email, type: "Guest", lastVisit: new Date().toLocaleDateString(), checkedOut: ["No"], uuid: crypto.randomUUID()}
         
         const response = await fetch("/api/create", {
             method: "POST",
@@ -24,9 +24,6 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
         });
 
         if (response.status === 200) {
-            const newData = [...databaseCustomers, newRow]
-            updateDatabase(newData)
-            
             setFirstName("");
             setMiddleName("");
             setLastName("");

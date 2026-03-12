@@ -2,7 +2,18 @@ import React, { useEffect } from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
 
-export function Database({email, databaseCustomers, updateDatabase, selectedUser, updateSelectedUser}) {
+export async function getDatabase(updateUseMsg) {
+    const response = await fetch("/api/database", {method: "GET"})
+
+    if (response.status === 200) {
+        return await response.json();
+    } else {
+        updateUseMsg("Error: in loading database, status " + response.status + " " + await response.json());
+        return []
+    }
+}
+
+export function Database({email, selectedUser, updateSelectedUser}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
 
     const [editsMsg, updateEditsMSG] = React.useState(JSON.parse(localStorage.getItem("editsMsg") || 'null') || [])
@@ -11,7 +22,13 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
     const nav = useNavigate()
     let [listOfUsers, updateListOfUsers] = React.useState(JSON.parse(localStorage.getItem("listOfUsers")) || ["John H.", "Ellie S.", "Ian M.", "Alan G."])
 
+    const [databaseCustomers, updateDatabase] = React.useState([])
+
     useEffect(() => {
+        getDatabase(updateUseMsg).then(updateDatabase)
+    }, [])
+
+    /*useEffect(() => {
         const intervalID = setInterval(() => {
             let tempDatabase = JSON.parse(localStorage.getItem("database")) || databaseCustomers
             //This will be replaced by a websocket call
@@ -74,7 +91,7 @@ export function Database({email, databaseCustomers, updateDatabase, selectedUser
         }, 5000)
 
         return () => {clearInterval(intervalID)}
-    })
+    })*/
 
     useEffect(() => {
         updateSelectedUser("")

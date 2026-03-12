@@ -2,19 +2,7 @@ import React, { useEffect } from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
 
-export async function getDatabase(updateUseMsg) {
-    const response = await fetch("/api/database", {method: "GET"})
 
-    if (response.status === 200) {
-        return await response.json();
-    } else if (response.status === 401) {
-        updateUseMsg("Error: authorization is not valid ");
-        return []
-    } else {
-        updateUseMsg("Error: failed to load database, status " + response.status);
-        return []
-    }
-}
 
 export function Database({email, selectedUser, updateSelectedUser}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
@@ -28,7 +16,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
-        getDatabase(updateUseMsg).then(updateDatabase)
+        getDatabase().then(updateDatabase)
     }, [])
 
     async function reserveAccount() {
@@ -48,6 +36,20 @@ export function Database({email, selectedUser, updateSelectedUser}) {
             updateUseMsg("Error: failed to reserve account, status " + response.status);
         }
     }
+
+    async function getDatabase() {
+    const response = await fetch("/api/database", {method: "GET"})
+
+    if (response.status === 200) {
+        return await response.json();
+    } else if (response.status === 401) {
+        updateUseMsg("Error: authorization is not valid ");
+        return []
+    } else {
+        updateUseMsg("Error: failed to load database, status " + response.status);
+        return []
+    }
+}
 
     /*useEffect(() => {
         const intervalID = setInterval(() => {
@@ -116,28 +118,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
 
     useEffect(() => {
         updateSelectedUser("")
-        for (let i = 0; i < databaseCustomers.length; i++) {
-            if(databaseCustomers[i].checkedOut === email) {
-                const account = {...databaseCustomers[i], checkedOut: "No"}
-                const updatedDatabase = [
-                    ...databaseCustomers.slice(0, i),
-                    account,
-                    ...databaseCustomers.slice(i+1)
-                ]
-                localStorage.setItem("database", JSON.stringify(updatedDatabase))
-                updateDatabase(updatedDatabase)
-                //search()
-                if(editsMsg.length < 10) {
-                    const newMsg = [{msg: `${email} checked in ${account.name}`}].concat(editsMsg)
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                } else {
-                    const newMsg = [{msg: `${email} checked in ${account.name}`}].concat(editsMsg.slice(0, -1))
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                }
-            }
-        }
+        getDatabase().then(updateDatabase)
     }, [])
 
     /*function checkSelection() {

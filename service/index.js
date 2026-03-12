@@ -86,8 +86,8 @@ apiRouter.get("/database", authenticate, async (req, res) => {
     res.send(database); 
 });
 
-apiRouter.get("/account", authenticate, async (req, res) => {
-    const uuid = req.body.uuid;
+apiRouter.get("/account/:uuid", authenticate, async (req, res) => {
+    const uuid = req.params.uuid;
     const account = database.find(account => account.uuid === uuid);
 
     if (account) {

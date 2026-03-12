@@ -79,11 +79,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
     }
 
     async function getAccount() {
-        const response = await fetch("/api/account", {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({uuid: selectedUser})
-        });
+        const response = await fetch("/api/account/" + selectedUser, {method: "GET"});
     
         if (response.status === 200) {
             return await response.json();

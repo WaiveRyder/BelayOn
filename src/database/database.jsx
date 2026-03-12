@@ -16,23 +16,6 @@ export async function getDatabase(updateUseMsg) {
     }
 }
 
-
-export async function getAccount(uuid, updateUseMsg) {
-    const response = await fetch("/api/account", {
-        method: "GET",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({uuid: uuid})
-    });
-
-    if (response.status === 200) {
-        return await response.json();
-    } else if (response.status === 401) {
-        updateUseMsg("Error: authorization is not valid");
-    } else {
-        updateUseMsg("Error: failed to load account, status " + response.status);
-    }
-}
-
 export function Database({email, selectedUser, updateSelectedUser}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
 
@@ -56,7 +39,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         });
 
         if (response.status === 200) {
-            //nav("/entrylookup")
+            nav("/entrylookup")
         } else if (response.status === 401) {
             updateUseMsg("Error: authorization is not valid");
         } else if (response.status === 408) {

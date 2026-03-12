@@ -6,14 +6,34 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
     const nav = useNavigate();
     let getUser = (selectedUser === "" ? "" : databaseCustomers[selectedUser])
 
-    const splitNames = getUser === "" ? "" : getUser.name.split(" ");
-    const [firstName, updateFirstName] = React.useState(splitNames[0])
-    const [middleName, updateMiddleName] = React.useState(splitNames.length === 3 ? splitNames[1] : "")
-    const [lastName, updateLastName] = React.useState(splitNames.length === 3 ? splitNames[2] : splitNames[1])
+    const [firstName, updateFirstName] = React.useState("")
+    const [middleName, updateMiddleName] = React.useState("")
+    const [lastName, updateLastName] = React.useState("")
 
-    const [newEmail, updateEmail] = (getUser === "") ? "" : React.useState(getUser.email)
-    const [newBirthday, updateBirthday] = (getUser === "") ? "" : React.useState(getUser.birthday)
-    const [newType, updateType] = (getUser === "") ? "" : React.useState(getUser.type)
+    const [newEmail, updateEmail] = React.useState("")
+    const [newBirthday, updateBirthday] = React.useState("")
+    const [newType, updateType] = React.useState("")
+
+    const [infoMsg, updateInfoMsg] = React.useState("");
+
+    useEffect(() => {
+        if (selectedUser !== "") {
+            user = getAccount(selectedUser)
+            user.then((res) => {
+                if (res) {
+                    splitNames = res.name.split(" ");
+                    updateFirstName(splitNames[0])
+                    updateMiddleName(splitNames.length === 3 ? splitNames[1] : "")
+                    updateLastName(splitNames.length === 3 ? splitNames[2] : splitNames[1])
+                    updateEmail(res.email)
+                    updateBirthday(res.birthday)
+                    updateType(res.type)
+                } 
+            })
+        } else {
+            updateInfoMsg("Error: no customer selected")
+        }
+    }, [])
 
     function save() {
         const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
@@ -54,12 +74,30 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
         nav("/database")
     }
 
+    async function getAccount(uuid) {
+        const response = await fetch("/api/account", {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({uuid: uuid})
+        });
+    
+        if (response.status === 200) {
+            return await response.json();
+        } else if (response.status === 401) {
+            updateInfoMsg("Error: authorization is not valid");
+            return null
+        } else {
+            updateInfoMsg("Error: failed to load account, status " + response.status);
+            return null
+        }
+    }
+
 
   return (
             <main>
             <h1>Account Viwer</h1>
 
-            <h2>Now Viewing {(getUser === "" || getUser.checkedOut != email) ? "ERROR: NO CUSTOMER SELECTED" : firstName}</h2>
+            <h2>Now Viewing {infoMsg}</h2>
 
                 <div className="row">
                     <div className="col">

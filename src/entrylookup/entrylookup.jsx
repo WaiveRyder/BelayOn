@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './entrylookup.css'
 import { data, useNavigate } from 'react-router-dom';
 
-export function Entrylookup({selectedUser}) {
+export function Entrylookup({selectedUser, updateSelectedUser}) {
     const nav = useNavigate();
 
     const [firstName, updateFirstName] = React.useState("")
@@ -12,6 +12,7 @@ export function Entrylookup({selectedUser}) {
     const [email, updateEmail] = React.useState("")
     const [birthday, updateBirthday] = React.useState("")
     const [type, updateType] = React.useState("")
+    const [lastVisit, updateLastVisit] = React.useState("")
 
     const [infoMsg, updateInfoMsg] = React.useState("");
 
@@ -24,10 +25,14 @@ export function Entrylookup({selectedUser}) {
                     updateFirstName(splitNames[0])
                     updateMiddleName(splitNames.length === 3 ? splitNames[1] : "")
                     updateLastName(splitNames.length === 3 ? splitNames[2] : splitNames[1])
+
                     updateEmail(res.email)
                     updateBirthday(res.birthday)
                     updateType(res.type)
-                } 
+                    updateLastVisit(res.lastVisit)
+                } else {
+                    updateSelectedUser("")
+                }
             })
         } else {
             updateInfoMsg("Error: no customer selected")
@@ -140,7 +145,7 @@ export function Entrylookup({selectedUser}) {
                 <div className="row">
                     <div className="col">
                         <label htmlFor="lastVisit">Last Visit</label>
-                        <input className="form-control" type="text" id="lastVisit" readOnly value={getUser.lastVisit} />
+                        <input className="form-control" type="text" id="lastVisit" readOnly value={lastVisit} />
                     </div>
                 </div>
 
@@ -167,13 +172,13 @@ export function Entrylookup({selectedUser}) {
                 <div className="row">
                     
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-info" onClick={save} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Save + Check In</button>
+                            <button type="submit" className="btn btn-info" onClick={save} disabled={(selectedUser === "")}>Save + Check In</button>
                         </div>
                     
 
                     
                         <div className="submit-buttons">
-                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(getUser === "" || getUser.checkedOut != email) ? true : false}>Exit + Check In</button>
+                            <button type="submit" className="btn btn-danger" onClick={noSave} disabled={(selectedUser === "")}>Exit + Check In</button>
                         </div>
                     
                 </div>

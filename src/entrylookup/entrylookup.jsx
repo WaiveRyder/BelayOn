@@ -39,31 +39,27 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
         }
     }, [])
 
-    function save() {
-        const newName = (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName
-        const fullDatabase = JSON.parse(localStorage.getItem("database"))
+    async function save() {
+        const response = fetch("/api/save", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                name: (middleName === "") ? firstName + " " + lastName : firstName + " " + middleName + " " + lastName,
+                birthday: birthday,
+                email: email,
+                type: type
+            })
+        });
 
-        if(
-            getUser.name != newName ||
-            getUser.email != newEmail ||
-            getUser.birthday != newBirthday ||
-            getUser.type != newType 
-        ) {
-            
-            const updatedUser = {...getUser, name: newName, birthday: newBirthday, email: newEmail, type: newType, lastVisit: new Date().toLocaleDateString(), checkedOut: email}
-            
-            const newDatabase = [
-                ...fullDatabase.slice(0, selectedUser),
-                updatedUser,
-                ...fullDatabase.slice(selectedUser+1)
-            ]
-            localStorage.setItem("database", JSON.stringify(newDatabase))
-            updateDatabase(newDatabase)
+        if (response.status === 200) {
             nav("/database")
+        } else if (response.status === 401) {
+            updateInfoMsg("Error: authorization is not valid");
+        } else if (response.status === 402) {
+            response.json().then(updateInfoMsg)
         } else {
-            noSave()
+            updateInfoMsg("Error: failed to save account, status " + response.status);
         }
-        
     }
 
     async function noSave() {

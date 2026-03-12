@@ -2,14 +2,30 @@ import React, { useEffect } from 'react';
 import './about.css';
 
 export function About() {
+    const [source, updateSource] = React.useState(null);
 
-    function getQuote() {
+    async function getQuote() {
         //Replaced by API call later
         return {
             quote: "\"If you want to make the world a better place, take a look at yourself and make a change. Hooo\"",
             author: "-Lego Batman"
         }
     }
+
+    const channelIDs = "UCMuDqExNJkCJpOHsX4VKY9g";
+
+    async function getVideo() {
+        const response = await fetch("/api/youtube");
+
+        if (response.status === 200) {
+            const data = await response.json();
+            updateSource(data.videoUrl);
+        }
+    }
+
+    useEffect(() => {
+        getVideo();
+    }, []);
 
   return (
     <main>
@@ -77,6 +93,7 @@ export function About() {
             </div>
 
             <img id="ondra" src="AdamOndraSilence.jpg" alt="Adam Ondra climbing the route Silence." />
+            <iframe width="560" height="315" src={source} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </main>
   );
 }

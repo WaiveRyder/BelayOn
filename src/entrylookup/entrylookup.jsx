@@ -135,7 +135,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
                 <div className="row">
                     <div className="col">
                         <label htmlFor="memberType">Type</label>
-                        <select name="type" id="memberType" className="form-control" defaultValue={type} onChange={(e) => updateType(e.target.value)}>
+                        <select name="type" id="memberType" className="form-control" value={type} onChange={(e) => updateType(e.target.value)}>
                             <option value="Guest">Guest</option>
                             <option value="Member">Member</option>
                         </select>

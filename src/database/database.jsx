@@ -245,7 +245,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
                 </tbody>
             </table>
 
-            <button className="btn btn-danger" onClick={reserveAccount}>Check Out Selected Account</button>
+            <button className="btn btn-danger" onClick={reserveAccount} disabled={selectedUser === ""}>Check Out Selected Account</button>
             <p style={{color: "red"}}><b>{inUseMsg}</b></p>
 
             {

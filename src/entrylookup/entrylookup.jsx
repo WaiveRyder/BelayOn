@@ -9,9 +9,9 @@ export function Entrylookup({email, selectedUser}) {
     const [middleName, updateMiddleName] = React.useState("")
     const [lastName, updateLastName] = React.useState("")
 
-    const [newEmail, updateEmail] = React.useState("")
-    const [newBirthday, updateBirthday] = React.useState("")
-    const [newType, updateType] = React.useState("")
+    const [email, updateEmail] = React.useState("")
+    const [birthday, updateBirthday] = React.useState("")
+    const [type, updateType] = React.useState("")
 
     const [infoMsg, updateInfoMsg] = React.useState("");
 
@@ -116,21 +116,21 @@ export function Entrylookup({email, selectedUser}) {
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputDOB">Date of Birth</label>
-                        <input type="date" className="form-control" id="inputDOB" defaultValue={(getUser === "") ? "" : new Date(newBirthday).toISOString().split("T")[0]} onChange={(e) => updateBirthday(e.target.value)} required />
+                        <input type="date" className="form-control" id="inputDOB" defaultValue={(birthday === "") ? "" : new Date(birthday).toISOString().split("T")[0]} onChange={(e) => updateBirthday(e.target.value)} required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="inputEmail">Email</label>
-                        <input type="email" className="form-control" id="inputEmail" defaultValue={newEmail} onChange={(e) => updateEmail(e.target.value)} placeholder="Email" required />
+                        <input type="email" className="form-control" id="inputEmail" defaultValue={email} onChange={(e) => updateEmail(e.target.value)} placeholder="Email" required />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
                         <label htmlFor="memberType">Type</label>
-                        <select name="type" id="memberType" className="form-control" defaultValue={newType} onChange={(e) => updateType(e.target.value)}>
+                        <select name="type" id="memberType" className="form-control" defaultValue={type} onChange={(e) => updateType(e.target.value)}>
                             <option value="Guest">Guest</option>
                             <option value="Member">Member</option>
                         </select>

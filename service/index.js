@@ -99,14 +99,15 @@ apiRouter.get("/account", authenticate, async (req, res) => {
 
 apiRouter.put("/reserve", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
+    const email = users.find(user => user.authToken === req.cookies.authToken).email;
     const account = database.find(account => account.uuid === uuid);
     
     if (account) {
         if (account.checkedOut.length === 1) {
-            account.checkedOut.push(req.body.email);
+            account.checkedOut.push(email);
 
             const accountCheck = database.find(account => account.uuid === uuid);
-            if (accountCheck.checkedOut[1] === req.body.email) {
+            if (accountCheck.checkedOut[1] === email) {
                 res.status(200).send(accountCheck);
             } else {
                 res.status(408).send({msg: "Error: account already reserved by " + accountCheck.checkedOut[1]})

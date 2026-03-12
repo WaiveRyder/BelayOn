@@ -2,9 +2,8 @@ import React from 'react';
 import './entrylookup.css'
 import { data, useNavigate } from 'react-router-dom';
 
-export function Entrylookup({email, databaseCustomers, updateDatabase, selectedUser}) {
+export function Entrylookup({email, selectedUser}) {
     const nav = useNavigate();
-    let getUser = (selectedUser === "" ? "" : databaseCustomers[selectedUser])
 
     const [firstName, updateFirstName] = React.useState("")
     const [middleName, updateMiddleName] = React.useState("")
@@ -18,7 +17,7 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
 
     useEffect(() => {
         if (selectedUser !== "") {
-            user = getAccount(selectedUser)
+            user = getAccount()
             user.then((res) => {
                 if (res) {
                     splitNames = res.name.split(" ");
@@ -74,11 +73,11 @@ export function Entrylookup({email, databaseCustomers, updateDatabase, selectedU
         nav("/database")
     }
 
-    async function getAccount(uuid) {
+    async function getAccount() {
         const response = await fetch("/api/account", {
             method: "GET",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({uuid: uuid})
+            body: JSON.stringify({uuid: selectedUser})
         });
     
         if (response.status === 200) {

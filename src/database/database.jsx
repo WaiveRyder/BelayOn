@@ -22,7 +22,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
                     const response = fetch("/api/checkin", {
                         method: "PUT",
                         headers: {"Content-Type": "application/json"},
-                        body: {uuid: customer.uuid}
+                        body: JSON.stringify({uuid: customer.uuid})
                     })
                 }
             });

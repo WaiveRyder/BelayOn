@@ -198,6 +198,14 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         }
     }
 
+    function displayCheckedOut(list) {
+        if (list.length === 1) {
+            return list[0]
+        } else {
+            return list[1]
+        }
+    }
+
   return (
           <main>
             <h1>Database</h1>
@@ -239,7 +247,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
                                 <td><button className="middle-button" onClick={() => findRow(row)}>{row.email}</button></td>
                                 <td><button className="middle-button" onClick={() => findRow(row)}>{row.type}</button></td>
                                 <td><button className="middle-button" onClick={() => findRow(row)}>{row.lastVisit}</button></td>
-                                <td><button className="close-button" onClick={() => findRow(row)}>{row.checkedOut}</button></td>
+                                <td><button className="close-button" onClick={() => findRow(row)}>{displayCheckedOut(row.checkedOut)}</button></td>
                             </tr>
                         })
                     }

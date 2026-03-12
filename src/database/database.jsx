@@ -7,8 +7,11 @@ export async function getDatabase(updateUseMsg) {
 
     if (response.status === 200) {
         return await response.json();
+    } else if (response.status === 401) {
+        updateUseMsg("Error: authorization is not valid ");
+        return []
     } else {
-        updateUseMsg("Error: in loading database, status " + response.status + " " + await response.json());
+        updateUseMsg("Error: failed to load database, status " + response.status);
         return []
     }
 }

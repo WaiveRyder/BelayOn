@@ -66,16 +66,22 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
         
     }
 
-    function noSave() {
-        const fullDatabase = JSON.parse(localStorage.getItem("database"))
-        const updatedUser = {...getUser, checkedOut: "No"}
-        const newDatabase = [
-            ...fullDatabase.slice(0, selectedUser),
-            updatedUser,
-            ...fullDatabase.slice(selectedUser+1)
-        ]
-        localStorage.setItem("database", JSON.stringify(newDatabase))
-        nav("/database")
+    async function noSave() {
+        const response = await fetch("/api/checkin", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({uuid: selectedUser})
+        })
+
+        if (response.status === 200) {
+            nav("/database")
+        } else if (response.status === 401) {
+            updateInfoMsg("Error: authorization is not valid");
+        } else if (response.status === 402) {
+            response.json().then(updateInfoMsg);
+        } else {
+            updateInfoMsg("Error: failed to check in account, status " + response.status);
+        }
     }
 
     async function getAccount() {

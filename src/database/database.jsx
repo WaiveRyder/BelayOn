@@ -39,8 +39,13 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         });
 
         if (response.status === 200) {
-            let newMessage = [{msg: email + " has checked out " + databaseCustomers.find(customer => customer.uuid === selectedUser)?.name}, ...editsMsg]
-            if (newMessage.length > 10) {
+            const user = databaseCustomers.find(customer => customer.uuid === selectedUser)
+            let newMessage = [{msg: email + " has checked out " + user.name}, ...editsMsg]
+            newMessage = [{msg: email + " has checked in " + user.name}, ...newMessage]
+            if (newMessage.length == 11) {
+                newMessage.pop()
+            } else if (newMessage.length == 12) {
+                newMessage.pop()
                 newMessage.pop()
             }
             localStorage.setItem("editsMsg", JSON.stringify(newMessage))

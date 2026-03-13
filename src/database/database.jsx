@@ -16,7 +16,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
-        async function checkIn() {
+        /*async function checkIn() {
             if (selectedUser !== "") {
             const response = await fetch("/api/checkin", {
                         method: "PUT",
@@ -27,7 +27,8 @@ export function Database({email, selectedUser, updateSelectedUser}) {
             updateSelectedUser("")
             getDatabase().then(updateDatabase)
         }
-        checkIn()
+        checkIn()*/
+        getDatabase().then(updateDatabase)
     }, [])
 
     async function reserveAccount() {
@@ -38,11 +39,18 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         });
 
         if (response.status === 200) {
+            let newMessage = [{msg: email + " has checked out " + databaseCustomers.find(customer => customer.uuid === selectedUser)?.name}, ...editsMsg]
+            if (newMessage.length > 10) {
+                newMessage.pop()
+            }
+            localStorage.setItem("editsMsg", JSON.stringify(newMessage))
+            updateEditsMSG(newMessage)
+
             nav("/entrylookup")
         } else if (response.status === 401) {
             updateUseMsg("Error: authorization is not valid");
         } else if (response.status === 408) {
-            response.json().then(updateEditsMSG);
+            response.json().then((res) => updateUseMsg(res.msg));
         } else {
             updateUseMsg("Error: failed to reserve account, status " + response.status);
         }
@@ -62,79 +70,58 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     }
 }
 
-    /*useEffect(() => {
-        const intervalID = setInterval(() => {
-            let tempDatabase = JSON.parse(localStorage.getItem("database")) || databaseCustomers
-            //This will be replaced by a websocket call
-            const indexUsers = Math.floor(Math.random() * listOfUsers.length)
+    useEffect(() => {
+        const intervalID = setInterval(async () => {
+            const randomUser = listOfUsers[Math.floor(Math.random() * listOfUsers.length)]
+            const randomAccount = databaseCustomers[Math.floor(Math.random() * databaseCustomers.length)]
 
-            const indexAccount = Math.floor(Math.random() * tempDatabase.length)
-            let randomAccount = tempDatabase[indexAccount]
+            if (randomAccount.checkedOut.length === 1 && randomUser) {
+                const response = await fetch("/api/reserve/websocket", {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({uuid: randomAccount.uuid, email: randomUser})
+                })
 
-            if (randomAccount.checkedOut === "No" && listOfUsers.length > 0) {
-                randomAccount = {...randomAccount, checkedOut: listOfUsers[indexUsers]}
-                const updatedDatabase = [
-                    ...tempDatabase.slice(0, indexAccount),
-                    randomAccount,
-                    ...tempDatabase.slice(indexAccount+1)
-                ]
-                localStorage.setItem("database", JSON.stringify(updatedDatabase))
+                if (response.status === 200) {
+                    getDatabase().then(updateDatabase)
 
-                let newList = listOfUsers.filter(name => name !== listOfUsers[indexUsers])
-                updateListOfUsers(newList)
-                localStorage.setItem("listOfUsers", JSON.stringify(newList))
-                
-                updateDatabase(updatedDatabase)
-
-                if(editsMsg.length < 10) {
-                    const newMsg = [{msg: `${listOfUsers[indexUsers]} checked out ${randomAccount.name}`}].concat(editsMsg)
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                } else {
-                    const newMsg = [{msg: `${listOfUsers[indexUsers]} checked out ${randomAccount.name}`}].concat(editsMsg.slice(0, -1))
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
+                    let newMessage = [{msg: randomUser + " has checked out " + randomAccount.name}, ...editsMsg]
+                    if (newMessage.length > 10) {
+                        newMessage.pop()
+                    }
+                    localStorage.setItem("editsMsg", JSON.stringify(newMessage))
+                    updateEditsMSG(newMessage)
+                    
+                    const newUsers = listOfUsers.filter(user => user !== randomUser)
+                    updateListOfUsers(newUsers)
+                    localStorage.setItem("listOfUsers", JSON.stringify(newUsers))
                 }
+            } else if (randomAccount.checkedOut.length >= 2 && randomAccount.checkedOut[1] !== email) {
+                const username = randomAccount.checkedOut[1]
+                const response = await fetch("/api/checkin/websocket", {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({uuid: randomAccount.uuid, email: username})
+                })
+                if (response.status === 200) {
+                    getDatabase().then(updateDatabase)
 
-            } else if (randomAccount.checkedOut !== "No" && randomAccount.checkedOut !== email) {
-                let newList = listOfUsers.concat(randomAccount.checkedOut)
-                const userCheckIn = randomAccount.checkedOut
-                updateListOfUsers(newList)
-                localStorage.setItem("listOfUsers", JSON.stringify(newList))
+                    let newMessage = [{msg: username + " has checked in " + randomAccount.name}, ...editsMsg]
+                    if (newMessage.length > 10) {
+                        newMessage.pop()
+                    }
+                    localStorage.setItem("editsMsg", JSON.stringify(newMessage))
+                    updateEditsMSG(newMessage)
 
-                randomAccount = {...randomAccount, checkedOut: "No"}
-                const updatedDatabase = [
-                    ...tempDatabase.slice(0, indexAccount),
-                    randomAccount,
-                    ...tempDatabase.slice(indexAccount+1)
-                ]
-                localStorage.setItem("database", JSON.stringify(updatedDatabase))
-                updateDatabase(updatedDatabase)
-
-                if(editsMsg.length < 10) {
-                    const newMsg = [{msg: `${userCheckIn} checked in ${randomAccount.name}`}].concat(editsMsg)
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
-                } else {
-                    const newMsg = [{msg: `${userCheckIn} checked in ${randomAccount.name}`}].concat(editsMsg.slice(0, -1))
-                    updateEditsMSG(newMsg)
-                    localStorage.setItem("editsMsg", JSON.stringify(newMsg))
+                    const newUsers = [...listOfUsers, username]
+                    updateListOfUsers(newUsers)
+                    localStorage.setItem("listOfUsers", JSON.stringify(newUsers))
                 }
             }
-            //search()
         }, 5000)
 
         return () => {clearInterval(intervalID)}
-    })*/
-
-    function findRow(row) {
-        for (let i = 0; i < databaseCustomers.length; i++) {
-            if(databaseCustomers[i].uuid === row.uuid) {
-                updateSelectedUser(row.uuid)
-                return
-            }
-        }
-    }
+    })
 
     function displayCheckedOut(list) {
         if (list.length === 1) {
@@ -180,12 +167,12 @@ export function Database({email, selectedUser, updateSelectedUser}) {
                     {
                         databaseCustomers.map((row, idx) => {
                             return <tr key={idx}>
-                                <td><button className="open-button" onClick={() => findRow(row)}>{row.name}</button></td>
-                                <td><button className="middle-button" onClick={() => findRow(row)}>{row.birthday}</button></td>
-                                <td><button className="middle-button" onClick={() => findRow(row)}>{row.email}</button></td>
-                                <td><button className="middle-button" onClick={() => findRow(row)}>{row.type}</button></td>
-                                <td><button className="middle-button" onClick={() => findRow(row)}>{row.lastVisit}</button></td>
-                                <td><button className="close-button" onClick={() => findRow(row)}>{displayCheckedOut(row.checkedOut)}</button></td>
+                                <td><button className="open-button" onClick={() => updateSelectedUser(row.uuid)}>{row.name}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row.uuid)}>{row.birthday}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row.uuid)}>{row.email}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row.uuid)}>{row.type}</button></td>
+                                <td><button className="middle-button" onClick={() => updateSelectedUser(row.uuid)}>{row.lastVisit}</button></td>
+                                <td><button className="close-button" onClick={() => updateSelectedUser(row.uuid)}>{displayCheckedOut(row.checkedOut)}</button></td>
                             </tr>
                         })
                     }

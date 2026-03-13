@@ -122,6 +122,51 @@ apiRouter.put("/reserve", authenticate, async (req, res) => {
     }
 })
 
+//REMOVE LATER --------------------------------------------
+apiRouter.put("/reserve/websocket", authenticate, async (req, res) => {
+    const uuid = req.body.uuid;
+    const email = req.body.email;
+    const account = database.find(account => account.uuid === uuid);
+    
+    if (account) {
+        if (account.checkedOut.length === 1) {
+            account.checkedOut.push(email);
+
+            const accountCheck = database.find(account => account.uuid === uuid);
+            if (accountCheck.checkedOut[1] === email) {
+                res.send();
+            } else {
+                res.status(408).send({msg: "Error: account already reserved by " + accountCheck.checkedOut[1]})
+            }
+        } else if (account.checkedOut[1] === email) {
+            res.send();
+        } else {
+            res.status(408).send({msg: "Error: account already reserved by " + account.checkedOut[1]})
+        }
+    } else {
+        res.status(404).send({msg: "Error: account not found"})
+    }
+})
+
+//REMOVE LATER ----------------------------------
+apiRouter.put("/checkin/websocket", authenticate, async (req, res) => {
+    const uuid = req.body.uuid;
+    const email = req.body.email;
+    const account = database.find(account => account.uuid === uuid);
+
+    if (account) {
+        if (account.checkedOut[1] === email) {
+            account.checkedOut = ["No"];
+            res.send();
+        } else {
+            res.status(402).send({msg: "Error: account is checked out by " + account.checkedOut[1]})
+        }
+    } else {
+        res.status(404).send({msg: "Error: account not found"})
+    }
+})
+
+
 apiRouter.put("/checkin", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
     const email = users.find(user => user.authToken === req.cookies.authToken).email;

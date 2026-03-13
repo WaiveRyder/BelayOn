@@ -32,6 +32,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
                     updateLastVisit(res.lastVisit)
                 } else {
                     updateSelectedUser("")
+                    updateInfoMsg("Error: account doesn't exist")
                 }
             })
         } else {

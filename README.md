@@ -105,12 +105,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Backend server handles HTTP requests and responses using Node.js.
+- [x] **Static middleware for frontend** - Middleware grabs json, static files, and cookies for ease of use.
+- [x] **Calls to third party endpoints** - Calls to adviceslip to get a quote.
+- [x] **Backend service endpoints** - Endpoints for register, login, getting database, getting user, saving user, checking in/out user.
+- [x] **Frontend calls service endpoints** - Front end makes all calls to service endpoints (except third party).
+- [x] **Supports registration, login, logout, and restricted endpoint** - All supported!
 
 ## 🚀 DB deliverable
 

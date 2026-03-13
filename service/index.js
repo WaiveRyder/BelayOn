@@ -215,6 +215,10 @@ function authenticate(req, res, next) {
     }
 }
 
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
+
 const port = 4000;
 app.listen(port, function() {
     console.log(`Server is running on port ${port}`);

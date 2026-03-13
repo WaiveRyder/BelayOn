@@ -215,7 +215,7 @@ function authenticate(req, res, next) {
     }
 }
 
-const port = 3000;
+const port = 4000;
 app.listen(port, function() {
     console.log(`Server is running on port ${port}`);
 });

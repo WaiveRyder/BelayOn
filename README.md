@@ -98,19 +98,19 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - Users can now sign up and login. Users can add customers to the database/local storage. Users can checkout customer accounts and update their content which is saved to local storage. If an account is checked out it cannot be edited by users.
+- [x] **All functionality implemented or mocked out** - Users can now sign up and login. Users can add customers to the database/local storage. Users can checkout customer accounts and update their content which is saved to local storage. Users can see when others checkout or check in accounts.
 - [x] **Hooks** - Used useState hooks for variables that changed the rendering of the page like the database. I also implemented useEffect for when events needed to happen in time or only once.
 
 ## 🚀 Service deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Backend server handles HTTP requests and responses using Node.js.
+- [x] **Static middleware for frontend** - Middleware grabs json, static files, and cookies for ease of use.
+- [x] **Calls to third party endpoints** - Calls to adviceslip to get a quote.
+- [x] **Backend service endpoints** - Endpoints for register, login, getting database, getting user, saving user, checking in/out user.
+- [x] **Frontend calls service endpoints** - Front end makes all calls to service endpoints (except third party).
+- [x] **Supports registration, login, logout, and restricted endpoint** - All supported!
 
 ## 🚀 DB deliverable
 

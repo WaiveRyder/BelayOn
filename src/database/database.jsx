@@ -126,7 +126,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         }, 5000)
 
         return () => {clearInterval(intervalID)}
-    })
+    }, [])
 
     function displayCheckedOut(list) {
         if (list.length === 1) {

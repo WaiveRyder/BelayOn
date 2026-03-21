@@ -6,7 +6,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url)
 const db = client.db('gym')
 const staff = db.collection('staff')
-const accounts = db.collection('accounts')
+const accounts = db.collection('accounts');
 
 (async function connection() {
     try {
@@ -60,7 +60,8 @@ async function reserveAccount(email, uuid) {
     if (account.checkedOut.length > 1 && account.checkedOut[1] !== email) {
         return account.checkedOut[1]
     } else if (account.checkedOut.length === 1) {
-        const checkAccount = await accounts.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
+        await accounts.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
+        const checkAccount = await accounts.findOne({uuid: uuid})
         return checkAccount.checkedOut[1]
     } else {
         return account.checkedOut[1]

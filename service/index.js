@@ -17,12 +17,12 @@ apiRouter.post("/register", async (req, res) => {
     const password = req.body.password;
     if (email === null || password === null) {
         res.status(400).send({msg: "Error: no null fields allowed"});
-    } else if (mongo.findStaffByEmail(email)) {
+    } else if (await mongo.findStaffByEmail(email)) {
         res.status(409).send({msg: "Error: email already in use"});
     } else {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = {email: email, password: hashedPassword, authToken: uuid.v4()}
-        mongo.createStaff(user)
+        await mongo.createStaff(user)
 
         res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24});
         res.status(200).send({email: user.email});
@@ -33,13 +33,13 @@ apiRouter.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password
     
-    let user = mongo.findStaffByEmail(email)
+    let user = await mongo.findStaffByEmail(email)
 
     if (email === undefined || password === undefined) {
         res.status(400).send({msg: "Error: no null fields allowed"});
     } else if (user !== undefined && user.email === email && await bcrypt.compare(password, user.password)) {
         user.authToken = uuid.v4();
-        mongo.addStaffAuth(user)
+        await mongo.addStaffAuth(user)
         res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24})
         res.status(200).send();
     } else {
@@ -49,9 +49,9 @@ apiRouter.post("/login", async (req, res) => {
 
 apiRouter.delete("/logout", async (req, res) => {
     const authToken = req.cookies.authToken;
-    let user = mongo.findStaffByAuthToken(authToken);
+    let user = await mongo.findStaffByAuthToken(authToken);
     if (user) {
-        mongo.removeStaffAuth(user)
+        await mongo.removeStaffAuth(user)
         res.clearCookie("authToken");
         res.status(200).send();
     } else {
@@ -69,17 +69,17 @@ apiRouter.post("/create", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
 
     let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
-    mongo.createNewAccount(user)
+    await mongo.createNewAccount(user)
     res.status(200).send();
 });
 
 apiRouter.get("/database", authenticate, async (req, res) => {
-    res.send(mongo.getAccounts()); 
+    res.send(await mongo.getAccounts()); 
 });
 
 apiRouter.get("/account/:uuid", authenticate, async (req, res) => {
     const uuid = req.params.uuid;
-    const account = mongo.getAccount(uuid);
+    const account = await mongo.getAccount(uuid);
 
     if (account) {
         res.send(account)
@@ -90,9 +90,9 @@ apiRouter.get("/account/:uuid", authenticate, async (req, res) => {
 
 apiRouter.put("/reserve", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
-    const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
+    const email = (await mongo.findStaffByAuthToken(req.cookies.authToken)).email;
 
-    const response = mongo.reserveAccount(email, uuid)
+    const response = await mongo.reserveAccount(email, uuid)
 
     if (response === "ANF") {
         res.status(404).send({msg: "Error: account not found"})
@@ -150,9 +150,9 @@ apiRouter.put("/checkin/websocket", authenticate, async (req, res) => {
 
 apiRouter.put("/checkin", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
-    const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
+    const email = (await mongo.findStaffByAuthToken(req.cookies.authToken)).email;
 
-    const response = mongo.checkInAccount(email, uuid)
+    const response = await mongo.checkInAccount(email, uuid)
 
     if (response === "ANF") {
         res.status(404).send({msg: "Error: account not found"})
@@ -165,10 +165,9 @@ apiRouter.put("/checkin", authenticate, async (req, res) => {
 
 apiRouter.put("/save", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
-    const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
+    const email = (await mongo.findStaffByAuthToken(req.cookies.authToken)).email;
 
-    const account = mongo.getAccount(uuid)
-    
+    const account = await mongo.getAccount(uuid)
 
     if (account) {
         account.name = req.body.name;
@@ -177,7 +176,7 @@ apiRouter.put("/save", authenticate, async (req, res) => {
         account.type = req.body.type;
         account.lastVisit = req.body.lastVisit;
         account.checkedOut = ["No"];
-        const response = mongo.saveAccount(email, uuid, account)
+        const response = await mongo.saveAccount(email, uuid, account)
         if (response === email) {
             res.send()
         } else {
@@ -188,9 +187,9 @@ apiRouter.put("/save", authenticate, async (req, res) => {
     }
 })
 
-function authenticate(req, res, next) {
+async function authenticate(req, res, next) {
     const authToken = req.cookies.authToken;
-    if (!mongo.findStaffByAuthToken(authToken)) {
+    if (!(await mongo.findStaffByAuthToken(authToken))) {
         res.status(401).send({msg: "Error: authentication not valid"})
     } else {
         next();

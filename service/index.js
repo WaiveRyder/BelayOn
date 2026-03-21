@@ -85,7 +85,7 @@ apiRouter.post("/create", authenticate, async (req, res) => {
 });
 
 apiRouter.get("/database", authenticate, async (req, res) => {
-    res.send(database); 
+    res.send(mongo.getAccounts()); 
 });
 
 apiRouter.get("/account/:uuid", authenticate, async (req, res) => {

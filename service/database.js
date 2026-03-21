@@ -21,3 +21,7 @@ const accounts = db.collection('accounts')
 function findUserByEmail(email) {
     return staff.findOne({email: email})
 }
+
+function findUserByAuthToken(authToken) {
+    return staff.findOne({authToken: authToken})
+}

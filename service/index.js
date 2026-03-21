@@ -163,7 +163,7 @@ apiRouter.put("/checkin", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
     const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
 
-    const response = mongo.checkInAccount(email)
+    const response = mongo.checkInAccount(email, uuid)
 
     if (response === "ANF") {
         res.status(404).send({msg: "Error: account not found"})

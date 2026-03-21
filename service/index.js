@@ -80,7 +80,7 @@ apiRouter.post("/create", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
 
     let user = {name: name, birthday: birthday, email: email, type: type, lastVisit: lastVisit, checkedOut: checkedOut, uuid: uuid}
-    database.push(user)
+    mongo.createNewAccount(user)
     res.status(200).send();
 });
 

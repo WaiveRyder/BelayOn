@@ -45,3 +45,7 @@ async function createNewAccount(user) {
 function getAccounts() {
     return accounts.find({}).toArray()
 }
+
+function getAccount(uuid) {
+    return accounts.findOne({uuid: uuid})
+}

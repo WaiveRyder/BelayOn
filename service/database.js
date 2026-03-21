@@ -18,39 +18,39 @@ const accounts = db.collection('accounts')
     }
 })();
 
-function findStaffByEmail(email) {
+export function findStaffByEmail(email) {
     return staff.findOne({email: email})
 }
 
-async function createStaff(staffUser) {
+export async function createStaff(staffUser) {
     await staff.insertOne(staffUser)
 }
 
-async function addStaffAuth(staffUser) {
+export async function addStaffAuth(staffUser) {
     await staff.updateOne({email: staffUser.email}, {$set: {authToken: staffUser.authToken}})
 }
 
-async function removeStaffAuth(staffUser) {
+export async function removeStaffAuth(staffUser) {
     await staff.updateOne({email: staffUser.email}, {$set: {authToken: -1}})
 }
 
-function findStaffByAuthToken(authToken) {
+export function findStaffByAuthToken(authToken) {
     return staff.findOne({authToken: authToken})
 }
 
-async function createNewAccount(user) {
+export async function createNewAccount(user) {
     await accounts.insertOne(user)
 }
 
-function getAccounts() {
+export function getAccounts() {
     return accounts.find({}).toArray()
 }
 
-function getAccount(uuid) {
+export function getAccount(uuid) {
     return accounts.findOne({uuid: uuid})
 }
 
-async function reserveAccount(email, uuid) {
+export async function reserveAccount(email, uuid) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (!account) {
@@ -67,7 +67,7 @@ async function reserveAccount(email, uuid) {
     }
 }
 
-async function checkInAccount(email, uuid) {
+export async function checkInAccount(email, uuid) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (!account) {
@@ -84,7 +84,7 @@ async function checkInAccount(email, uuid) {
     }
 }
 
-async function saveAccount(email, uuid, updatedAccount) {
+export async function saveAccount(email, uuid, updatedAccount) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (!account) {

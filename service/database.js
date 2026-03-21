@@ -60,7 +60,7 @@ async function reserveAccount(email, uuid) {
     if (account.checkedOut.length > 1 && account.checkedOut[1] !== email) {
         return account.checkedOut[1]
     } else if (account.checkedOut.length === 1) {
-        const checkAccount = await collection.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
+        const checkAccount = await accounts.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
         return checkAccount.checkedOut[1]
     } else {
         return account.checkedOut[1]

@@ -60,9 +60,9 @@ apiRouter.post("/login", async (req, res) => {
 
 apiRouter.delete("/logout", async (req, res) => {
     const authToken = req.cookies.authToken;
-    let user = users.find(user => user.authToken === authToken);
+    let user = mongo.findStaffByAuthToken(authToken);
     if (user) {
-        delete user.authToken;
+        mongo.removeStaffAuth(user)
         res.clearCookie("authToken");
         res.status(200).send();
     } else {

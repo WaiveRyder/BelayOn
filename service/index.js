@@ -102,7 +102,6 @@ apiRouter.get("/account/:uuid", authenticate, async (req, res) => {
 apiRouter.put("/reserve", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
     const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
-    const account = mongo.getAccount(uuid);
 
     const response = mongo.reserveAccount(email, uuid)
 

@@ -24,7 +24,7 @@ apiRouter.post("/register", async (req, res) => {
         const user = {email: email, password: hashedPassword, authToken: uuid.v4()}
         await mongo.createStaff(user)
 
-        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24});
+        res.cookie("authToken", user.authToken, {secure: true, httpOnly: true, sameSite: "strict", maxAge: 1000*60*60*24});
         res.status(200).send({email: user.email});
     }
 });
@@ -40,7 +40,7 @@ apiRouter.post("/login", async (req, res) => {
     } else if (user !== undefined && user.email === email && await bcrypt.compare(password, user.password)) {
         user.authToken = uuid.v4();
         await mongo.addStaffAuth(user)
-        res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24})
+        res.cookie("authToken", user.authToken, {secure: true, httpOnly: true, sameSite: "strict", maxAge: 1000*60*60*24})
         res.status(200).send();
     } else {
         res.status(401).send({msg: "Error: username or password is incorrect"});

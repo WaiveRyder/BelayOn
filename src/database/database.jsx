@@ -75,7 +75,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     }
 }
 
-    useEffect(() => {
+/*    useEffect(() => {
         const intervalID = setInterval(async () => {
             const randomUser = listOfUsers[Math.floor(Math.random() * listOfUsers.length)]
             const randomAccount = databaseCustomers[Math.floor(Math.random() * databaseCustomers.length)]
@@ -126,7 +126,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         }, 5000)
 
         return () => {clearInterval(intervalID)}
-    }, [])
+    }, [])*/
 
     function displayCheckedOut(list) {
         if (list.length === 1) {

@@ -3,6 +3,7 @@ const app = express();
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const mongo = require("./database.js")
 
 const users = [];
 

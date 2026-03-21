@@ -56,7 +56,7 @@ async function reserveAccount(email, uuid) {
         return account.checkedOut[1]
     } else if (account.checkedOut.length === 1) {
         const checkAccount = await collection.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
-        return checkAccount.checkAccount[1]
+        return checkAccount.checkedOut[1]
     } else {
         return account.checkedOut[1]
     }
@@ -67,6 +67,18 @@ async function checkInAccount(email, uuid) {
     if(account.checkedOut.length > 1 && account.checkedOut[1] === email) {
         await accounts.updateOne({uuid: uuid}, {$set: {checkedOut: ["No"]}})
         return email
+    } else if (account.checkedOut > 1) {
+        return account.checkedOut[1]
+    } else {
+        return "No"
+    }
+}
+
+async function saveAccount(email, uuid, updatedAccount) {
+    const account = await accounts.findOne({uuid: uuid})
+
+    if (account.checkedOut.length > 1 && account.checkedOut[1] === email) {
+        await accounts.replaceOne({uuid: uuid}, updatedAccount)
     } else if (account.checkedOut > 1) {
         return account.checkedOut[1]
     } else {

@@ -201,7 +201,7 @@ apiRouter.put("/save", authenticate, async (req, res) => {
 
 function authenticate(req, res, next) {
     const authToken = req.cookies.authToken;
-    if (!users.find(user => user.authToken === authToken)) {
+    if (!mongo.findStaffByAuthToken(authToken)) {
         res.status(401).send({msg: "Error: authentication not valid"})
     } else {
         next();

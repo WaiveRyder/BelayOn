@@ -37,3 +37,7 @@ async function removeStaffAuth(staffUser) {
 function findStaffByAuthToken(authToken) {
     return staff.findOne({authToken: authToken})
 }
+
+async function createNewAccount(user) {
+    await accounts.insertOne(user)
+}

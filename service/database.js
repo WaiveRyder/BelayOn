@@ -41,3 +41,7 @@ function findStaffByAuthToken(authToken) {
 async function createNewAccount(user) {
     await accounts.insertOne(user)
 }
+
+function getAccounts() {
+    return accounts.find({}).toArray()
+}

@@ -30,6 +30,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
                     updateBirthday(res.birthday)
                     updateType(res.type)
                     updateLastVisit(res.lastVisit)
+                    updateInfoMsg(res.name)
                 } else {
                     updateSelectedUser("")
                     updateInfoMsg("Error: account doesn't exist")

@@ -161,18 +161,16 @@ apiRouter.put("/checkin/websocket", authenticate, async (req, res) => {
 
 apiRouter.put("/checkin", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
-    const email = users.find(user => user.authToken === req.cookies.authToken).email;
-    const account = database.find(account => account.uuid === uuid);
+    const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
 
-    if (account) {
-        if (account.checkedOut[1] === email) {
-            account.checkedOut = ["No"];
-            res.send();
-        } else {
-            res.status(402).send({msg: "Error: account is checked out by " + account.checkedOut[1]})
-        }
-    } else {
+    const response = mongo.checkInAccount(email)
+
+    if (response === "ANF") {
         res.status(404).send({msg: "Error: account not found"})
+    } else if (response === email) {
+        res.send();
+    } else {
+        res.status(402).send({msg: "Error: account is checked out by " + response})
     }
 })
 

@@ -26,6 +26,14 @@ async function createStaff(staffUser) {
     await staff.insertOne(staffUser)
 }
 
+async function addStaffAuth(staffUser) {
+    await staff.updateOne({email: staffUser.email}, {$set: {authToken: staffUser.authToken}})
+}
+
+async function removeStaffAuth(staffUser) {
+    await staff.updateOne({email: staffUser.email}, {$set: {authToken: -1}})
+}
+
 function findStaffByAuthToken(authToken) {
     return staff.findOne({authToken: authToken})
 }

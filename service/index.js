@@ -90,7 +90,7 @@ apiRouter.get("/database", authenticate, async (req, res) => {
 
 apiRouter.get("/account/:uuid", authenticate, async (req, res) => {
     const uuid = req.params.uuid;
-    const account = database.find(account => account.uuid === uuid);
+    const account = mongo.getAccount(uuid);
 
     if (account) {
         res.send(account)

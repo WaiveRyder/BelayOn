@@ -18,39 +18,39 @@ const accounts = db.collection('accounts')
     }
 })();
 
-export function findStaffByEmail(email) {
+function findStaffByEmail(email) {
     return staff.findOne({email: email})
 }
 
-export async function createStaff(staffUser) {
+async function createStaff(staffUser) {
     await staff.insertOne(staffUser)
 }
 
-export async function addStaffAuth(staffUser) {
+async function addStaffAuth(staffUser) {
     await staff.updateOne({email: staffUser.email}, {$set: {authToken: staffUser.authToken}})
 }
 
-export async function removeStaffAuth(staffUser) {
+async function removeStaffAuth(staffUser) {
     await staff.updateOne({email: staffUser.email}, {$set: {authToken: -1}})
 }
 
-export function findStaffByAuthToken(authToken) {
+function findStaffByAuthToken(authToken) {
     return staff.findOne({authToken: authToken})
 }
 
-export async function createNewAccount(user) {
+async function createNewAccount(user) {
     await accounts.insertOne(user)
 }
 
-export function getAccounts() {
+function getAccounts() {
     return accounts.find({}).toArray()
 }
 
-export function getAccount(uuid) {
+function getAccount(uuid) {
     return accounts.findOne({uuid: uuid})
 }
 
-export async function reserveAccount(email, uuid) {
+async function reserveAccount(email, uuid) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (!account) {
@@ -67,7 +67,7 @@ export async function reserveAccount(email, uuid) {
     }
 }
 
-export async function checkInAccount(email, uuid) {
+async function checkInAccount(email, uuid) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (!account) {
@@ -84,7 +84,7 @@ export async function checkInAccount(email, uuid) {
     }
 }
 
-export async function saveAccount(email, uuid, updatedAccount) {
+async function saveAccount(email, uuid, updatedAccount) {
     const account = await accounts.findOne({uuid: uuid})
 
     if (account.checkedOut.length > 1 && account.checkedOut[1] === email) {
@@ -95,4 +95,18 @@ export async function saveAccount(email, uuid, updatedAccount) {
     } else {
         return "No"
     }
+}
+
+module.exports = {
+    findStaffByEmail, 
+    createStaff, 
+    addStaffAuth, 
+    removeStaffAuth, 
+    findStaffByAuthToken, 
+    createNewAccount, 
+    getAccounts, 
+    getAccount, 
+    reserveAccount, 
+    checkInAccount, 
+    saveAccount
 }

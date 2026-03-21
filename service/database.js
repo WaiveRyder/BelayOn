@@ -52,10 +52,24 @@ function getAccount(uuid) {
 
 async function reserveAccount(email, uuid) {
     const account = await accounts.findOne({uuid: uuid})
-    if (account.checkedOut.length > 1 && account.checkedOut[1] != email) {
+    if (account.checkedOut.length > 1 && account.checkedOut[1] !== email) {
         return account.checkedOut[1]
-    } else if (account.checkedOut.length == 1) {
+    } else if (account.checkedOut.length === 1) {
         const checkAccount = await collection.updateOne({uuid: uuid}, {$push: {checkedOut: email}})
         return checkAccount.checkAccount[1]
+    } else {
+        return account.checkedOut[1]
+    }
+}
+
+async function checkInAccount(email, uuid) {
+    const account = await accounts.findOne({uuid: uuid})
+    if(account.checkedOut.length > 1 && account.checkedOut[1] === email) {
+        await accounts.updateOne({uuid: uuid}, {$set: {checkedOut: ["No"]}})
+        return email
+    } else if (account.checkedOut > 1) {
+        return account.checkedOut[1]
+    } else {
+        return "No"
     }
 }

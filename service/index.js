@@ -115,7 +115,7 @@ apiRouter.put("/reserve", authenticate, async (req, res) => {
 })
 
 //REMOVE LATER --------------------------------------------
-apiRouter.put("/reserve/websocket", authenticate, async (req, res) => {
+/*apiRouter.put("/reserve/websocket", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
     const email = req.body.email;
     const account = database.find(account => account.uuid === uuid);
@@ -156,7 +156,7 @@ apiRouter.put("/checkin/websocket", authenticate, async (req, res) => {
     } else {
         res.status(404).send({msg: "Error: account not found"})
     }
-})
+})*/
 
 
 apiRouter.put("/checkin", authenticate, async (req, res) => {

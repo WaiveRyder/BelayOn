@@ -18,10 +18,14 @@ const accounts = db.collection('accounts')
     }
 })();
 
-function findUserByEmail(email) {
+function findStaffByEmail(email) {
     return staff.findOne({email: email})
 }
 
-function findUserByAuthToken(authToken) {
+async function createStaff(staffUser) {
+    await staff.insertOne(staffUser)
+}
+
+function findStaffByAuthToken(authToken) {
     return staff.findOne({authToken: authToken})
 }

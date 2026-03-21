@@ -37,7 +37,7 @@ apiRouter.post("/login", async (req, res) => {
 
     if (email === undefined || password === undefined) {
         res.status(400).send({msg: "Error: no null fields allowed"});
-    } else if (user !== undefined && user.email === email && await bcrypt.compare(password, user.password)) {
+    } else if (user && user.email === email && await bcrypt.compare(password, user.password)) {
         user.authToken = uuid.v4();
         await mongo.addStaffAuth(user)
         res.cookie("authToken", user.authToken, {secure: true, httpOnly: true, sameSite: "strict", maxAge: 1000*60*60*24})

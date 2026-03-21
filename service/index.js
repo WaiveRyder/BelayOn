@@ -28,12 +28,12 @@ apiRouter.post("/register", async (req, res) => {
     const password = req.body.password;
     if (email === null || password === null) {
         res.status(400).send({msg: "Error: no null fields allowed"});
-    } else if (users.find(user => user.email === email)) {
+    } else if (mongo.findStaffByEmail(email)) {
         res.status(409).send({msg: "Error: email already in use"});
     } else {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = {email: email, password: hashedPassword, authToken: uuid.v4()}
-        users.push(user);
+        mongo.createStaff(user)
 
         res.cookie("authToken", user.authToken, {secure: true, httpsOnly: true, sameSite: "strict", maxAge: 1000*60*60*24});
         res.status(200).send({email: user.email});

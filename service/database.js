@@ -87,12 +87,9 @@ export async function checkInAccount(email, uuid) {
 export async function saveAccount(email, uuid, updatedAccount) {
     const account = await accounts.findOne({uuid: uuid})
 
-    if (!account) {
-        return "ANF"
-    }
-
     if (account.checkedOut.length > 1 && account.checkedOut[1] === email) {
         await accounts.replaceOne({uuid: uuid}, updatedAccount)
+        return email
     } else if (account.checkedOut > 1) {
         return account.checkedOut[1]
     } else {

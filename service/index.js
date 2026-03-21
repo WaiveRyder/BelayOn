@@ -176,20 +176,23 @@ apiRouter.put("/checkin", authenticate, async (req, res) => {
 
 apiRouter.put("/save", authenticate, async (req, res) => {
     const uuid = req.body.uuid;
-    const email = users.find(user => user.authToken === req.cookies.authToken).email;
-    const account = database.find(account => account.uuid === uuid);
+    const email = mongo.findStaffByAuthToken(req.cookies.authToken).email;
+
+    const account = mongo.getAccount(uuid)
+    
 
     if (account) {
-        if (account.checkedOut[1] === email) {
-            account.name = req.body.name;
-            account.birthday = req.body.birthday;
-            account.email = req.body.email;
-            account.type = req.body.type;
-            account.lastVisit = req.body.lastVisit;
-            account.checkedOut = ["No"];
-            res.send();
+        account.name = req.body.name;
+        account.birthday = req.body.birthday;
+        account.email = req.body.email;
+        account.type = req.body.type;
+        account.lastVisit = req.body.lastVisit;
+        account.checkedOut = ["No"];
+        const response = mongo.saveAccount(email, uuid, account)
+        if (response === email) {
+            res.send()
         } else {
-            res.status(402).send({msg: "Error: account is checked out by " + account.checkedOut[1]})
+            res.status(402).send({msg: "Error: account is checked out by " + response})
         }
     } else {
         res.status(404).send({msg: "Error: account not found"})

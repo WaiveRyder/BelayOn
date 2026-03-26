@@ -39,7 +39,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
         } else {
             updateInfoMsg("Error: no customer selected")
         }
-    }, [selectedUser])
+    }, [])
 
     async function save() {
         const response = await fetch("/api/save", {

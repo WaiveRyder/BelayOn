@@ -3,7 +3,7 @@ const {WebSocketServer, WebSocket} = require('ws');
 function peerProxy(server) {
     const wss = new WebSocketServer({ server: server})
 
-    WebSocketServer.on("connection", (ws) => {
+    wss.on("connection", (ws) => {
         ws.isAlive = true;
 
         ws.on("message", function message(data) {

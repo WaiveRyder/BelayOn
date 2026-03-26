@@ -18,4 +18,15 @@ function peerProxy(server) {
             ws.isAlive = true;
         })
     })
+
+    setInterval(() => {
+        wss.clients.forEach(function each(client) {
+            if (client.isAlive === false) {
+                return client.terminate();
+            }
+
+            client.isAlive = false;
+            client.ping();
+        })
+    }, 10000)
 }

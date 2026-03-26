@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const mongo = require("./database.js")
+const { peerProxy } = require("./peerProxy.js");
 
 app.use(express.json());
 app.use(cookieParser());

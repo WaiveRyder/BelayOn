@@ -202,6 +202,8 @@ app.use((_req, res) => {
 });
 
 const port = 4000;
-app.listen(port, function() {
+const myService = app.listen(port, function() {
     console.log(`Server is running on port ${port}`);
 });
+
+peerProxy(myService)

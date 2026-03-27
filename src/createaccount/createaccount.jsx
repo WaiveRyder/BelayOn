@@ -1,8 +1,9 @@
 import React from 'react';
 import './createaccount.css'
 import { useNavigate } from 'react-router-dom';
+import {notifier} from "../database/checkoutNotifier.js";
 
-export function Createaccount({databaseCustomers, updateDatabase}) {
+export function Createaccount({userEmail}) {
     const nav = useNavigate();
 
     const [firstName, setFirstName] = React.useState("");
@@ -30,7 +31,10 @@ export function Createaccount({databaseCustomers, updateDatabase}) {
             setBirthday("");
             setEmail("");
             setErrorMsg("");
-            
+
+            let newMessage = `${userEmail} has created a new account for ${newRow.name}`
+            notifier.sendMessage(newMessage)
+
             nav("/database")
         } else {
             setErrorMsg("Error: authorization not valid")

@@ -38,7 +38,7 @@ export default function App() {
               <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
               <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
               <Route path='/database' element={<Database email={email} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} viewingAccount={viewingAccount} updateViewingAccount={updateViewingAccount}/>} />
-              <Route path='/createaccount' element={<Createaccount />} />
+              <Route path='/createaccount' element={<Createaccount userEmail={email} />} />
               <Route path='/entrylookup' element={<Entrylookup userEmail={email} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />
               <Route path='/about' element={<About />} />
               <Route path='*' element={<NotFound />} />

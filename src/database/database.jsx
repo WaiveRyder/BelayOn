@@ -16,12 +16,14 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
-        notifier.setMethod(handleMessage)
         if (viewingAccount === true) {
             helpOnLoad()
         }
-        
         getDatabase().then(updateDatabase)
+    }, [])
+
+    useEffect(() => {
+        notifier.setMethod(handleMessage)
     }, [editsMsg])
 
     async function helpOnLoad() {

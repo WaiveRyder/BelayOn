@@ -32,15 +32,7 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
 
         if (response.status === 200) {
             const account = await response.json()
-            if (account.checkedOut.length === 1) {
-                let newMessage = `${email} has checked in ${account.name}`
-                notifier.sendMessage(newMessage)
-                if (editsMsg.length > 10) {
-                    updateEditsMSG([newMessage, ...editsMsg.slice(0, 9)])
-                } else {
-                    updateEditsMSG([newMessage, ...editsMsg])
-                }
-            } else if (account.checkedOut[1] === email) {
+            if (account.checkedOut[1] === email) {
                 const response = await fetch("/api/checkin", {
                     method: "PUT",
                     headers: {"Content-Type": "application/json"},

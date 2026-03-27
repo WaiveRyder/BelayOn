@@ -31,9 +31,12 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
         if (response.status === 200) {
             const account = await response.json()
             if (account.checkedOut.length === 1) {
-                let newMessage = [{msg: `${email} has checked in ${account.name}`}, ...editsMsg]
-                if (newMessage.length > 10) {
-                    newMessage.pop()
+                let newMessage = `${email} has checked in ${account.name}`
+                notifier.sendMessage(newMessage)
+                if (editsMsg.length > 10) {
+                    updateEditsMSG([newMessage, ...editsMsg.slice(0, 9)])
+                } else {
+                    updateEditsMSG([newMessage, ...editsMsg])
                 }
                 updateEditsMSG(newMessage)
             }
@@ -41,7 +44,7 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
     }
 
     function handleMessage(message) {
-        let newMessage = [{msg: message}, ...editsMsg]
+        let newMessage = [message, ...editsMsg]
         if (newMessage.length > 10) {
             newMessage.pop()
         }
@@ -212,7 +215,7 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
 
             {
                 editsMsg.map((msg, idx) => {
-                    return <p key={idx}>{msg.msg}</p>
+                    return <p key={idx}>{msg}</p>
                 })
             }
           </main>

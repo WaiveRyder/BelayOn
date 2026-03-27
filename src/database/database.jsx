@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
-
+import { checkoutNotifier } from "./checkoutNotifier.js";
 
 
 export function Database({email, selectedUser, updateSelectedUser}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
 
-    const [editsMsg, updateEditsMSG] = React.useState(JSON.parse(localStorage.getItem("editsMsg") || 'null') || [])
+    const [editsMsg, updateEditsMSG] = React.useState([])
 
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
@@ -16,6 +16,7 @@ export function Database({email, selectedUser, updateSelectedUser}) {
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
+        checkoutNotifier.setMethod(handleMessage)
         /*async function checkIn() {
             if (selectedUser !== "") {
             const response = await fetch("/api/checkin", {
@@ -30,6 +31,14 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         checkIn()*/
         getDatabase().then(updateDatabase)
     }, [])
+
+    function handleMessage(message) {
+        let newMessage = [message, ...editsMsg]
+        if (newMessage.length > 10) {
+            newMessage.pop()
+        }
+        updateEditsMSG(newMessage)
+    }
 
     async function reserveAccount() {
         const response = await fetch("/api/reserve", {

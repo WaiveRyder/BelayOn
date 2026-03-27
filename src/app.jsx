@@ -14,6 +14,7 @@ export default function App() {
   const [email, setEmail] = React.useState(localStorage.getItem("user") || "");
   const [password, setPassword] = React.useState("");
   const [loggedIn, updateLoggedIn] = React.useState((localStorage.getItem("user") || "") !== "");
+  const [viewingAccount, updateViewingAccount] = React.useState(false);
 
   const [selectedUser, updateSelectedUser] = React.useState("")
 
@@ -36,7 +37,7 @@ export default function App() {
             <Routes>
               <Route path='/' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
               <Route path='/login' element={<Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} updateLoggedIn={updateLoggedIn} />} exact />
-              <Route path='/database' element={<Database email={email} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} />} />
+              <Route path='/database' element={<Database email={email} selectedUser={selectedUser} updateSelectedUser={updateSelectedUser} viewingAccount={viewingAccount} updateViewingAccount={updateViewingAccount}/>} />
               <Route path='/createaccount' element={<Createaccount />} />
               <Route path='/entrylookup' element={<Entrylookup selectedUser={selectedUser} updateSelectedUser={updateSelectedUser}/>} />
               <Route path='/about' element={<About />} />

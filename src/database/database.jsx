@@ -22,7 +22,7 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
         }
         
         getDatabase().then(updateDatabase)
-    }, [])
+    }, [editsMsg])
 
     async function helpOnLoad() {
         updateViewingAccount(false)

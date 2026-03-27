@@ -3,7 +3,7 @@ import './entrylookup.css'
 import { useNavigate } from 'react-router-dom';
 import { notifier } from "../database/checkoutNotifier.js";
 
-export function Entrylookup({selectedUser, updateSelectedUser}) {
+export function Entrylookup({userEmail, selectedUser, updateSelectedUser}) {
     const nav = useNavigate();
 
     const [firstName, updateFirstName] = React.useState("")
@@ -57,7 +57,7 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
         });
 
         if (response.status === 200) {
-            let newMessage = `${email} has checked in ${firstName} ${lastName}`
+            let newMessage = `${userEmail} has checked in ${firstName} ${lastName}`
             notifier.sendMessage(newMessage)
             nav("/database")
         } else if (response.status === 401) {
@@ -77,6 +77,8 @@ export function Entrylookup({selectedUser, updateSelectedUser}) {
         })
 
         if (response.status === 200) {
+            let newMessage = `${userEmail} has checked in ${firstName} ${lastName}`
+            notifier.sendMessage(newMessage)
             nav("/database")
         } else if (response.status === 401) {
             updateInfoMsg("Error: authorization is not valid");

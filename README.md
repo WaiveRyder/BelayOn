@@ -116,15 +116,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [x] **Stores data in MongoDB** - I am storing customer accounts in mongo.
+- [x] **Stores credentials in MongoDB** - I am storing staff/user credentials in mongo.
 
 ## 🚀 WebSocket deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Backend is set up and listens for WebSocket connections and pings.
+- [x] **Frontend makes WebSocket connection** - Front end makes a websocket connection.
+- [x] **Data sent over WebSocket connection** - Front end sends check in/out messages to notify other users which accounts they are editing. Aditionally, messages are sent for creating accounts.
+- [x] **WebSocket data displayed** - On the database page, websocket data is displayed when a user checks in/out or creates an account.
+- [x] **Application is fully functional** - Yep! It works.

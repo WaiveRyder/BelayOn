@@ -38,6 +38,22 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
                 } else {
                     updateEditsMSG([newMessage, ...editsMsg])
                 }
+            } else if (account.checkedOut[1] === email) {
+                const response = await fetch("/api/checkin", {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({uuid: selectedUser})
+                })
+                if (response.status === 200) {
+                    let newMessage = `${email} has checked in ${account.name}`
+                    if (editsMsg.length > 10) {
+                        updateEditsMSG([newMessage, ...editsMsg.slice(0, 9)])
+                    } else {
+                        updateEditsMSG([newMessage, ...editsMsg])
+                    }
+                    notifier.sendMessage(newMessage)
+                    getDatabase().then(updateDatabase)
+                }
             }
         }
     }
@@ -48,6 +64,7 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
             newMessage.pop()
         }
         updateEditsMSG(newMessage)
+        getDatabase().then(updateDatabase)
     }
 
     async function reserveAccount() {

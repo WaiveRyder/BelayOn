@@ -1,7 +1,7 @@
 const {WebSocketServer, WebSocket} = require('ws');
 
-function peerProxy(server) {
-    const wss = new WebSocketServer({ server: server})
+function peerProxy(wsServer) {
+    const wss = new WebSocketServer({ server: wsServer })
 
     wss.on("connection", (ws) => {
         ws.isAlive = true;

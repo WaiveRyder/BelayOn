@@ -1,36 +1,43 @@
 import React, { useEffect } from 'react';
 import './database.css';
 import { useNavigate } from 'react-router-dom';
-import { checkoutNotifier } from "./checkoutNotifier.js";
+import { notifier } from "./checkoutNotifier.js";
 
 
-export function Database({email, selectedUser, updateSelectedUser}) {
+export function Database({email, selectedUser, updateSelectedUser, viewingAccount, updateViewingAccount}) {
     //const [searchQuery, updateSearchQuery] = React.useState("")
 
     const [editsMsg, updateEditsMSG] = React.useState([])
 
     const [inUseMsg, updateUseMsg] = React.useState("")
     const nav = useNavigate()
-    let [listOfUsers, updateListOfUsers] = React.useState(JSON.parse(localStorage.getItem("listOfUsers")) || ["John H.", "Ellie S.", "Ian M.", "Alan G."])
+    //let [listOfUsers, updateListOfUsers] = React.useState(JSON.parse(localStorage.getItem("listOfUsers")) || ["John H.", "Ellie S.", "Ian M.", "Alan G."])
 
     const [databaseCustomers, updateDatabase] = React.useState([])
 
     useEffect(() => {
-        checkoutNotifier.setMethod(handleMessage)
-        /*async function checkIn() {
-            if (selectedUser !== "") {
-            const response = await fetch("/api/checkin", {
-                        method: "PUT",
-                        headers: {"Content-Type": "application/json"},
-                        body: JSON.stringify({uuid: selectedUser})
-                    })
-            }
-            updateSelectedUser("")
-            getDatabase().then(updateDatabase)
+        notifier.setMethod(handleMessage)
+        if (viewingAccount === true) {
+            helpOnLoad()
         }
-        checkIn()*/
+        
         getDatabase().then(updateDatabase)
     }, [])
+
+    async function helpOnLoad() {
+        updateViewingAccount(false)
+        const response = await fetch("/api/account/" + selectedUser, {method: "GET"});
+
+        if (reserveAccount.status === 200) {
+            const account = await response.json()
+            if (account.checkedOut.length === 1) {
+                let newMessage = [`${email} has checked in ${account.name}`, ...newMessage]
+                if (newMessage.length > 10) {
+                    newMessage.pop()
+                }
+            }
+        }
+    }
 
     function handleMessage(message) {
         let newMessage = [message, ...editsMsg]
@@ -50,15 +57,12 @@ export function Database({email, selectedUser, updateSelectedUser}) {
         if (response.status === 200) {
             const user = databaseCustomers.find(customer => customer.uuid === selectedUser)
             let newMessage = [{msg: email + " has checked out " + user.name}, ...editsMsg]
-            newMessage = [{msg: email + " has checked in " + user.name}, ...newMessage]
-            if (newMessage.length == 11) {
-                newMessage.pop()
-            } else if (newMessage.length == 12) {
-                newMessage.pop()
+            if (newMessage.length > 10) {
                 newMessage.pop()
             }
-            localStorage.setItem("editsMsg", JSON.stringify(newMessage))
             updateEditsMSG(newMessage)
+            updateViewingAccount(true)
+            notifier.sendMessage(email + " has checked out " + user.name)
 
             nav("/entrylookup")
         } else if (response.status === 401) {

@@ -28,19 +28,20 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
         updateViewingAccount(false)
         const response = await fetch("/api/account/" + selectedUser, {method: "GET"});
 
-        if (reserveAccount.status === 200) {
+        if (response.status === 200) {
             const account = await response.json()
             if (account.checkedOut.length === 1) {
-                let newMessage = [`${email} has checked in ${account.name}`, ...newMessage]
+                let newMessage = [{msg: `${email} has checked in ${account.name}`}, ...editsMsg]
                 if (newMessage.length > 10) {
                     newMessage.pop()
                 }
+                updateEditsMSG(newMessage)
             }
         }
     }
 
     function handleMessage(message) {
-        let newMessage = [message, ...editsMsg]
+        let newMessage = [{msg: message}, ...editsMsg]
         if (newMessage.length > 10) {
             newMessage.pop()
         }

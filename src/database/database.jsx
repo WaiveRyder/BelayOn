@@ -38,7 +38,6 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
                 } else {
                     updateEditsMSG([newMessage, ...editsMsg])
                 }
-                updateEditsMSG(newMessage)
             }
         }
     }
@@ -60,13 +59,14 @@ export function Database({email, selectedUser, updateSelectedUser, viewingAccoun
 
         if (response.status === 200) {
             const user = databaseCustomers.find(customer => customer.uuid === selectedUser)
-            let newMessage = [{msg: email + " has checked out " + user.name}, ...editsMsg]
-            if (newMessage.length > 10) {
-                newMessage.pop()
-            }
-            updateEditsMSG(newMessage)
+            let newMessage = `${email} has checked out ${user.name}`
+            if (editsMsg.length > 10) {
+                updateEditsMSG([newMessage, ...editsMsg.slice(0, 9)])
+            } else {
+                updateEditsMSG([newMessage, ...editsMsg])
+            }    
             updateViewingAccount(true)
-            notifier.sendMessage(email + " has checked out " + user.name)
+            notifier.sendMessage(newMessage)
 
             nav("/entrylookup")
         } else if (response.status === 401) {
